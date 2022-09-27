@@ -9,7 +9,6 @@
     tools:context=".SubActivity">
 
     <ImageView
-        android:layout_marginTop="20dp"
         android:id="@+id/makeup_someimg"
         android:layout_width="match_parent"
         android:layout_height="170dp"
@@ -20,21 +19,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#FFEB3B"
-        android:padding="5dp"
+        android:padding="10dp"
         android:ems="10"
         android:hint="화장품 이름"
         android:inputType="textPersonName"
-        android:textSize="15dp" />
+        android:textSize="13dp" />
 
     <ScrollView
         android:id="@+id/scrollview"
-        android:background="#FFC4C4"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="#FFC4C4">
+
+        <include layout="@layout/sub_list_item" />
     </ScrollView>
 
 
