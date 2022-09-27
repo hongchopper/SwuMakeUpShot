@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/border.xml" value="0.1245" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1265" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_247.xml" value="0.2455" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_249.xml" value="0.2455" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/listview_list_item.xml" value="0.33" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/searchable.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/sub.xml" value="0.22" />
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/sub_list_item.xml" value="0.33" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/menu/options_menu.xml" value="0.33" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/xml/searchable.xml" value="0.14583333333333334" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/xml/searchable1.xml" value="0.19444444444444445" />

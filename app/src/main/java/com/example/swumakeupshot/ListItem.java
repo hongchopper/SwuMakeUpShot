@@ -1,13 +1,13 @@
 package com.example.swumakeupshot;
 
-public class BearItem {
+public class ListItem {
     /* 아이템의 정보를 담기 위한 클래스 */
 
     String num;
     String name;
     int resId;
 
-    public BearItem(String num, String name, int resId) {
+    public ListItem(String num, String name, int resId) {
         this.num = num;
         this.name = name;
         this.resId = resId;

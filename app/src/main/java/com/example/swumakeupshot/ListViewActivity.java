@@ -1,21 +1,12 @@
 package com.example.swumakeupshot;
 
-import android.app.Activity;
-
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,14 +28,14 @@ public class ListViewActivity extends AppCompatActivity {
         adapter = new ListViewAdapter();
 
         //Adapter 안에 아이템의 정보 담기
-        adapter.addItem(new BearItem("1", "파랑이", R.drawable.ocean));
-        adapter.addItem(new BearItem("2", "민트트", R.drawable.ocean));
-        adapter.addItem(new BearItem("3", "하늘이", R.drawable.ocean));
-        adapter.addItem(new BearItem("4", "하양이", R.drawable.ocean));
-        adapter.addItem(new BearItem("5", "분홍이", R.drawable.ocean));
-        adapter.addItem(new BearItem("6", "노랑이", R.drawable.ocean));
-        adapter.addItem(new BearItem("7", "보라라", R.drawable.ocean));
-        adapter.addItem(new BearItem("8", "믹스스", R.drawable.ocean));
+        adapter.addItem(new ListItem("1", "파랑이", R.drawable.ocean));
+        adapter.addItem(new ListItem("2", "민트트", R.drawable.ocean));
+        adapter.addItem(new ListItem("3", "하늘이", R.drawable.ocean));
+        adapter.addItem(new ListItem("4", "하양이", R.drawable.ocean));
+        adapter.addItem(new ListItem("5", "분홍이", R.drawable.ocean));
+        adapter.addItem(new ListItem("6", "노랑이", R.drawable.ocean));
+        adapter.addItem(new ListItem("7", "보라라", R.drawable.ocean));
+        adapter.addItem(new ListItem("8", "믹스스", R.drawable.ocean));
 
         //리스트뷰에 Adapter 설정
         listview.setAdapter(adapter);
@@ -53,14 +44,14 @@ public class ListViewActivity extends AppCompatActivity {
 
     /* 리스트뷰 어댑터 */
     public class ListViewAdapter extends BaseAdapter {
-        ArrayList<BearItem> items = new ArrayList<BearItem>();
+        ArrayList<ListItem> items = new ArrayList<ListItem>();
 
         @Override
         public int getCount() {
             return items.size();
         }
 
-        public void addItem(BearItem item) {
+        public void addItem(ListItem item) {
             items.add(item);
         }
 
@@ -77,7 +68,7 @@ public class ListViewActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             final Context context = viewGroup.getContext();
-            final BearItem bearItem = items.get(position);
+            final ListItem bearItem = items.get(position);
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
