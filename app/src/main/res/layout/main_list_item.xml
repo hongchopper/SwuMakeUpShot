@@ -23,7 +23,7 @@
             android:weightSum="100" >
             <ImageView
                 android:src="@drawable/ic_baseline_image_24"
-                android:id="@+id/tv_num"
+                android:id="@+id/makeup_img"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="100"
@@ -40,11 +40,12 @@
             android:weightSum="100" >
 
             <TextView
-                android:textSize="15dp"
-                android:text="화장품 이름"
-                android:layout_marginTop="15dp"
+                android:id="@+id/makeup_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="화장품 이름"
+                android:textSize="15dp" />
 
             <LinearLayout
                 android:layout_marginTop="7dp"
@@ -55,31 +56,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_circle_smallblue" />
+
                 <TextView
+                    android:id="@+id/good"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="5개" />
+                    android:text="5개"
+                    android:textSize="12dp" />
                 <ImageView
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_circle_smallorange" />
+
                 <TextView
+                    android:id="@+id/allergy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="5개" />
+                    android:text="5개"
+                    android:textSize="12dp" />
                 <ImageView
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_circle_samllred" />
+
                 <TextView
+                    android:id="@+id/caution"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="5개" />
+                    android:text="5개"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,11 +95,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="100" >
+
                 <TextView
-                    android:textSize="10dp"
-                    android:text="성분명1, 성분명2, 성분명3, 성분명4, ..."
+                    android:id="@+id/makeup_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="성분명1, 성분명2, 성분명3, 성분명4, ..."
+                    android:textSize="10dp" />
             </LinearLayout>
         </LinearLayout>
 

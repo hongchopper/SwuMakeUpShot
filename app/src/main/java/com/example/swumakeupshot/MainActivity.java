@@ -1,7 +1,6 @@
 package com.example.swumakeupshot;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listview = null;
@@ -22,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview);
+        setContentView(R.layout.main);
 
-        listview = (ListView) findViewById(R.id.listview);
+        listview = (ListView) findViewById(R.id.main_listview);
         adapter = new ListViewAdapter();
 
         //Adapter 안에 아이템의 정보 담기
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.listview_list_item, viewGroup, false);
+                convertView = inflater.inflate(R.layout.main_list_item, viewGroup, false);
 
             } else {
                 View view = new View(context);

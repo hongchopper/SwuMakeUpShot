@@ -19,12 +19,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_circle_grey" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="전체 성분 / " />
+                android:text="전체 성분 / "
+                android:textSize="15dp" />
             <TextView
+                android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
@@ -38,6 +40,7 @@
             android:background="@drawable/border">
 
             <TextView
+                android:id="@+id/all_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -60,16 +63,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_circle_blue" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="기능성 / " />
+                android:text="기능성 / "
+                android:textSize="15dp" />
+
             <TextView
+                android:id="@+id/good"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="5개" />
+                android:text="5개"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,12 +83,14 @@
             android:layout_height="100dp"
             android:background="@drawable/border"
             android:layout_margin="10dp">
+
             <TextView
-                android:layout_margin="10dp"
+                android:id="@+id/good_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:text="성분들 이름"/>
+                android:layout_margin="10dp"
+                android:text="성분들 이름"
+                android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -105,11 +113,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:text="알러지 성분 / " />
+
             <TextView
+                android:id="@+id/allergy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="5개" />
+                android:text="5개"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,12 +127,14 @@
             android:layout_height="100dp"
             android:background="@drawable/border"
             android:layout_margin="10dp">
+
             <TextView
-                android:layout_margin="10dp"
+                android:id="@+id/allergy_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:text="성분들 이름"/>
+                android:layout_margin="10dp"
+                android:text="성분들 이름"
+                android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -148,10 +160,11 @@
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/caution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="5개" />
+                android:text="5개"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -159,12 +172,14 @@
             android:layout_height="100dp"
             android:background="@drawable/border"
             android:layout_margin="10dp">
+
             <TextView
-                android:layout_margin="10dp"
+                android:id="@+id/caution_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:text="성분들 이름"/>
+                android:layout_margin="10dp"
+                android:text="성분들 이름"
+                android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
 
