@@ -33,7 +33,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:background="#FFC4C4">
-
         <include layout="@layout/sub_list_item" />
     </ScrollView>
 
