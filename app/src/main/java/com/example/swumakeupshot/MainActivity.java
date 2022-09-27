@@ -1,6 +1,7 @@
 package com.example.swumakeupshot;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class ListViewActivity extends AppCompatActivity {
-    private String TAG = ListViewActivity.class.getSimpleName();
-
+public class MainActivity extends AppCompatActivity {
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 

@@ -7,10 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SubActivity extends AppCompatActivity {
-    private String TAG = ListViewActivity.class.getSimpleName();
+    private String TAG = MainActivity.class.getSimpleName();
 
     private ListView listview = null;
-    private ListViewActivity.ListViewAdapter adapter = null;
+    private MainActivity.ListViewAdapter adapter = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
