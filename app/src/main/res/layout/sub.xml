@@ -3,29 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SubActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/makeup_someimg"
         android:layout_width="match_parent"
-        android:layout_height="155dp"
+        android:layout_height="170dp"
         app:srcCompat="@drawable/ic_baseline_image_24" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/makeup_editname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="10dp"
         android:ems="10"
         android:hint="화장품 이름"
-        android:inputType="textPersonName"/>
+        android:inputType="textPersonName"
+        android:textSize="13dp" />
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="#FFC4C4">
+        <include layout="@layout/sub_list_item" />
+    </ScrollView>
 
 
 </LinearLayout>
