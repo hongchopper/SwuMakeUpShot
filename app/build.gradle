@@ -30,8 +30,10 @@ android {
 
 dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.yanzhenjie:permission:2.0.3'
 
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
