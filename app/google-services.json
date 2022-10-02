@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "723135373317",
+    "project_id": "cosmetic-364106",
+    "storage_bucket": "cosmetic-364106.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723135373317:android:cb84ad97d67cafa573fc6c",
+        "android_client_info": {
+          "package_name": "com.example.swumakeupshot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723135373317-tjaa0a443v4p69k19rn57diu9mr27bm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPuXalx0vOae66ptWU2g6RpYfLSsY6cWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723135373317-tjaa0a443v4p69k19rn57diu9mr27bm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723135373317:android:09ff2e7f96686f9273fc6c",
+        "android_client_info": {
+          "package_name": "com.swu.cosmetic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723135373317-tjaa0a443v4p69k19rn57diu9mr27bm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPuXalx0vOae66ptWU2g6RpYfLSsY6cWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723135373317-tjaa0a443v4p69k19rn57diu9mr27bm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
