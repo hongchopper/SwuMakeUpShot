@@ -2,19 +2,28 @@ package com.example.swumakeupshot;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    Button camerabtn;
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 
@@ -22,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        camerabtn=(Button)findViewById(R.id.camera_btn);
 
         listview = (ListView) findViewById(R.id.main_listview);
         adapter = new ListViewAdapter();
@@ -40,6 +51,22 @@ public class MainActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
     }
 
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // 카메라 촬영을 하면 이미지뷰에 사진 삽입
+        if(requestCode == 0 && resultCode == RESULT_OK) {
+            // Bundle로 데이터를 입력
+            Bundle extras = data.getExtras();
+
+            // Bitmap으로 컨버전
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            // 이미지뷰에 Bitmap으로 이미지를 입력
+            imageView.setImageBitmap(imageBitmap);
+        }
+    }*/
 
     /* 리스트뷰 어댑터 */
     public class ListViewAdapter extends BaseAdapter {
@@ -91,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), SubActivity.class);
-                    startActivity(intent);
+
+                    Toast.makeText(context, bearItem.getNum() + " 번 - " + bearItem.getName() + " 입니당! ", Toast.LENGTH_SHORT).show();
                 }
             });
 
