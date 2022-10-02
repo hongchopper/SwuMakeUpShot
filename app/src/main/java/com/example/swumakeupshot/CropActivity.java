@@ -20,7 +20,6 @@ public class CropActivity extends AppCompatActivity {
 
     }
 
-
     /** Start pick image activity with chooser. */
     public void onSelectImageClick(View view) {
         CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(this);
