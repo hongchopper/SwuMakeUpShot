@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+/*
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -20,7 +20,6 @@ public class CropActivity extends AppCompatActivity {
 
     }
 
-    /** Start pick image activity with chooser. */
     public void onSelectImageClick(View view) {
         CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(this);
     }
@@ -43,3 +42,4 @@ public class CropActivity extends AppCompatActivity {
     }
 
 }
+*/
