@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/activity_crop.xml" value="0.1195" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/border.xml" value="0.1245" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1265" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_247.xml" value="0.2455" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_249.xml" value="0.2455" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_blue.xml" value="0.2195" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_grey.xml" value="0.2195" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_orange.xml" value="0.2195" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_circle_red.xml" value="0.2195" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.2455" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.2455" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2335" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/small_border.xml" value="0.2475" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/activity_crop.xml" value="0.275" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/activity_listview.xml" value="0.25" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/cloudvision.xml" value="0.25" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/listview_list_item.xml" value="0.33" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/main.xml" value="0.2675925925925926" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/main_list_item.xml" value="0.3265625" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/searchable.xml" value="0.19444444444444445" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/sub.xml" value="0.25" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/sub_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/menu/options_menu.xml" value="0.33" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/xml/searchable.xml" value="0.14583333333333334" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/xml/searchable1.xml" value="0.19444444444444445" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
