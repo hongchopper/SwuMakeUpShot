@@ -1,6 +1,7 @@
 package com.example.swumakeupshot;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Toast.makeText(context, bearItem.getNum() + " 번 - " + bearItem.getName() + " 입니당! ", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                    startActivity(intent);
                 }
             });
 
