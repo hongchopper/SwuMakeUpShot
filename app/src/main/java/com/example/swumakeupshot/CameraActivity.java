@@ -54,7 +54,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
                     try{
                         File tempImage = File.createTempFile(imageFileName, ".jpg", tempDir);
-                        mCurrentPhotoPath = tempImage.getAbsolutePath();
+                        //mCurrentPhotoPath = tempImage.getAbsolutePath();
                         photoFile = tempImage;
 
                     } catch (IOException e){
@@ -128,8 +128,10 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
                     if(extras != null)
                     {
-                        File file = new File(mCurrentPhotoPath);
-                        CropImage.activity(Uri.fromFile(file).start(CameraActivity.this);
+                        //File file = new File(mCurrentPhotoPath);
+                        //CropImage.activity(Uri.fromFile(file).start(CameraActivity.this);
+                        
+                        //비트맵 방식
                         //Bitmap photo = extras.getParcelable("data"); //크롭한 이미지 가져오기
                         //imageView.setImageBitmap(photo); //이미지뷰에 넣기
                     }
