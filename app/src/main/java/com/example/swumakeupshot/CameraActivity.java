@@ -18,8 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView imageView;
@@ -36,7 +40,35 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
         btnCamera = (Button)findViewById(R.id.onCameraClick);
 
-        btnCamera.setOnClickListener(this);
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(takePictureIntent.resolveActivity(getPackageManager())!=null){
+                    File photoFile = null;
+
+                    File tempDir = getCacheDir();
+
+                    String timeStamp = new SimpleDateFormat("yyyyMdd_HHmmss").format(new Date());
+                    String imageFileName = "Capture_" + timeStamp+ "_";
+
+                    try{
+                        File tempImage = File.createTempFile(imageFileName, ".jpg", tempDir);
+                        mCurrentPhotoPath = tempImage.getAbsolutePath();
+                        photoFile = tempImage;
+
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+
+                    if(photoFile!=null){
+                        Uri photoURI = FileProvider.getUriForFile(CameraActivity.this, getPackageName()+".fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, 1);
+                    }
+                }
+            }
+        });
 
         //Uri exposure 무시
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -54,6 +86,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -62,6 +95,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
         }
     }
+
 
     @Override
     public void onClick(View view) {
@@ -94,8 +128,10 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
                     if(extras != null)
                     {
-                        Bitmap photo = extras.getParcelable("data"); //크롭한 이미지 가져오기
-                        imageView.setImageBitmap(photo); //이미지뷰에 넣기
+                        File file = new File(mCurrentPhotoPath);
+                        CropImage.activity(Uri.fromFile(file).start(CameraActivity.this);
+                        //Bitmap photo = extras.getParcelable("data"); //크롭한 이미지 가져오기
+                        //imageView.setImageBitmap(photo); //이미지뷰에 넣기
                     }
 
                     // 임시 파일 삭제
