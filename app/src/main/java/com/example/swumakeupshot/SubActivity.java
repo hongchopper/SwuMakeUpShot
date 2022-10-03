@@ -65,16 +65,7 @@ public class SubActivity extends AppCompatActivity {
                 View view = new View(context);
                 view = (View) convertView;
             }
-/*
-            TextView tv_num = (TextView) convertView.findViewById(R.id.tv_num);
-            TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-            ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
-            tv_num.setText(bearItem.getNum());
-            tv_name.setText(bearItem.getName());
-            iv_icon.setImageResource(bearItem.getResId());
-            Log.d(TAG, "getView() - [ " + position + " ] " + bearItem.getName());
-*/
             //각 아이템 선택 event
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
