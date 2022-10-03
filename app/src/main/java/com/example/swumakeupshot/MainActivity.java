@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    Button camerabtn;
+    FloatingActionButton camerabtn;
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        camerabtn=(Button)findViewById(R.id.camera_btn);
+        camerabtn=(FloatingActionButton)findViewById(R.id.camera_btn);
 
         listview = (ListView) findViewById(R.id.main_listview);
         adapter = new ListViewAdapter();
