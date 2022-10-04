@@ -40,7 +40,7 @@ public class CameraActivity extends AppCompatActivity {
     public static final int REQUEST_TAKE_PHOTO = 10;
     public static final int REQUEST_PERMISSION = 11;
 
-    private Button btnCamera, btnSave;
+    private Button btnCamera, btAnalysis;
     private ImageView ivCapture ;
     private String mCurrentPhotoPath;
 
@@ -53,7 +53,7 @@ public class CameraActivity extends AppCompatActivity {
 
         ivCapture = findViewById(R.id.quick_start_cropped_image); //ImageView 선언
         btnCamera = findViewById(R.id.onCameraClick); //Button 선언
-        btnSave = findViewById(R.id.onSelectImageClick); //Button 선언
+        btAnalysis = findViewById(R.id.onSelectImageClick); //Button 선언
 
         loadImgArr();
 
@@ -61,7 +61,7 @@ public class CameraActivity extends AppCompatActivity {
         btnCamera.setOnClickListener(v -> captureCamera());
 
         //저장
-        btnSave.setOnClickListener(v -> {
+        btAnalysis.setOnClickListener(v -> {
 
             try {
                 BitmapDrawable drawable = (BitmapDrawable) ivCapture.getDrawable();
