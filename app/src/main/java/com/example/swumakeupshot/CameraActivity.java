@@ -14,11 +14,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +81,7 @@ public class CameraActivity extends AppCompatActivity{
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode==RESULT_OK){
             File file=new File(mCurrentPhotoPath);
-            //CropImage.activity(Uri.fromFile(file)).start(CameraActivity.this);
+            CropImage.activity(Uri.fromFile(file)).start(CameraActivity.this);
             }
         }
 
