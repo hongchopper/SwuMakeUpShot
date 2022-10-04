@@ -46,8 +46,9 @@
                 android:resource="@xml/filepaths"/>
         </provider>
 
-        <activity android:name=".CameraActivity" />
+<!--        <activity android:name=".CameraActivity" />-->
         <activity android:name=".SubActivity" />
+        <activity android:name=".textDetector" />
 
     </application>
 

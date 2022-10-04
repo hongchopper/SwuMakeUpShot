@@ -1,4 +1,4 @@
-package com.example.swumakeupshot;
+/*package com.example.swumakeupshot;
 
 import android.Manifest;
 import android.content.Intent;
@@ -100,9 +100,9 @@ public class CameraActivity extends AppCompatActivity {
                 String imageFileName = "Capture_" + timeStamp + "_"; //ex) Capture_20201206_
 
                 File tempImage = File.createTempFile(
-                        imageFileName,  /* 파일이름 */
-                        ".jpg",         /* 파일형식 */
-                        tempDir      /* 경로 */
+                        imageFileName,  //파일이름
+                        ".jpg",    // 파일형식
+                        tempDir      //경로
                 );
 
                 // ACTION_VIEW 인텐트를 사용할 경로 (임시파일의 경로)
@@ -296,5 +296,5 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
-}
+}*/
 

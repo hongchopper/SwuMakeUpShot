@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +23,7 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -43,10 +45,10 @@ public class textDetector extends AppCompatActivity {
 
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
-        recognizer = TextRecognition.getClient();    //텍스트 인식에 사용될 모델
+        recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
         // GET IMAGE 버튼
-        btn_get_image = findViewById(R.id.btn_get_image);
+        btn_get_image = findViewById(R.id.getPic);
         btn_get_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +59,7 @@ public class textDetector extends AppCompatActivity {
         });
 
         // IMAGE DETECTION 버튼
-        btn_detection_image = findViewById(R.id.btn_detection_image);
+        btn_detection_image = findViewById(R.id.onSelectImageClick);
         btn_detection_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +76,7 @@ public class textDetector extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             // 갤러리에서 선택한 사진에 대한 uri를 가져온다.
             uri = data.getData();
-
+            //Glide.with(this).load(uri).into(imageView);
             setImage(uri);
         }
     }
