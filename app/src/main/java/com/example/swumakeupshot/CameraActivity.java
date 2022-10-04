@@ -14,19 +14,78 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraActivity extends AppCompatActivity implements View.OnClickListener{
+public class CameraActivity extends AppCompatActivity{
     ImageView imageView;
+    String mCurrentPhotoPath;
+    Button camerabtn;
+    Button selectbtn;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_crop);
+
+        imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
+        camerabtn = (Button)findViewById(R.id.onCameraClick);
+        selectbtn=(Button)findViewById(R.id.onSelectImageClick);
+        camerabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(takePictureIntent.resolveActivity(getPackageManager())!=null){
+                    File photoFile = null;
+
+                    File tempDir = getCacheDir();
+
+                    String timeStamp = new SimpleDateFormat("yyyyMdd_HHmmss").format(new Date());
+                    String imageFileName = "Capture_" + timeStamp+ "_";
+
+                    try{
+                        File tempImage = File.createTempFile(imageFileName, ".jpg", tempDir);
+                        mCurrentPhotoPath = tempImage.getAbsolutePath();
+                        photoFile = tempImage;
+
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+
+                    if(photoFile!=null){
+                        Uri photoURI = FileProvider.getUriForFile(CameraActivity.this, getPackageName()+".fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, 1);
+                    }
+                }
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==RESULT_OK){
+            File file=new File(mCurrentPhotoPath);
+            CropImage.activity(Uri.fromFile(file)).start(CameraActivity.this);
+            }
+        }
+
+    /*ImageView imageView;
     Button btnCamera;
     final static int TAKE_PICTURE = 1;
     final static int CROP_PICTURE = 2;
@@ -164,6 +223,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             }
         }
-    }
+    }*/
 }
 
