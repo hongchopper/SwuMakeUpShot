@@ -13,10 +13,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.runtime.Permission;
+import android.widget.Toast;
 
 import java.util.List;
 import androidx.annotation.NonNull;
@@ -25,15 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraActivity extends AppCompatActivity{
-    ImageView imageView;
+public class CameraActivity extends AppCompatActivity implements View.OnClickListener{
+    /*ImageView imageView;
     String mCurrentPhotoPath;
     Button camerabtn;
     Button selectbtn;
@@ -43,49 +38,52 @@ public class CameraActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
 
-        imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
-        camerabtn = (Button)findViewById(R.id.onCameraClick);
-        selectbtn=(Button)findViewById(R.id.onSelectImageClick);
+        imageView = (ImageView) findViewById(R.id.quick_start_cropped_image);
+        camerabtn = (Button) findViewById(R.id.onCameraClick);
+        selectbtn = (Button) findViewById(R.id.onSelectImageClick);
         camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(takePictureIntent.resolveActivity(getPackageManager())!=null){
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     File photoFile = null;
 
                     File tempDir = getCacheDir();
 
                     String timeStamp = new SimpleDateFormat("yyyyMdd_HHmmss").format(new Date());
-                    String imageFileName = "Capture_" + timeStamp+ "_";
+                    String imageFileName = "Capture_" + timeStamp + "_";
 
-                    try{
+                    try {
                         File tempImage = File.createTempFile(imageFileName, ".jpg", tempDir);
                         mCurrentPhotoPath = tempImage.getAbsolutePath();
                         photoFile = tempImage;
 
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    if(photoFile!=null){
-                        Uri photoURI = FileProvider.getUriForFile(CameraActivity.this, getPackageName()+".fileprovider", photoFile);
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(CameraActivity.this, getPackageName() + ".fileprovider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, 1);
                     }
                 }
             }
+
         });
+
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode==RESULT_OK){
-            File file=new File(mCurrentPhotoPath);
-            CropImage.activity(Uri.fromFile(file)).start(CameraActivity.this);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (requestCode == RESULT_OK) {
+                File file = new File(mCurrentPhotoPath);
+                //CropImage.activity(Uri.fromFile(file)).start(CameraActivity.this);
             }
         }
-
-    /*ImageView imageView;
+    }*/
+    ImageView imageView;
     Button btnCamera;
     final static int TAKE_PICTURE = 1;
     final static int CROP_PICTURE = 2;
@@ -223,6 +221,6 @@ public class CameraActivity extends AppCompatActivity{
                 break;
             }
         }
-    }*/
+    }
 }
 
