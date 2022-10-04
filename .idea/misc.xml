@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/border.xml" value="0.143" />
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/drawable/searchview_background.xml" value="0.143" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/activity_crop.xml" value="0.2859375" />
-        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/main.xml" value="0.2859375" />
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/main.xml" value="0.25" />
         <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/layout/sub.xml" value="0.2859375" />
+        <entry key="..\:/Users/Sunny/SwuMakeUpShot/app/src/main/res/menu/options_menu.xml" value="0.2805128205128205" />
       </map>
     </option>
   </component>

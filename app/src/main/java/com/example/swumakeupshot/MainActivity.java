@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -97,16 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 View view = new View(context);
                 view = (View) convertView;
             }
-/*
-            TextView tv_num = (TextView) convertView.findViewById(R.id.tv_num);
-            TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-            ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
 
-            tv_num.setText(bearItem.getNum());
-            tv_name.setText(bearItem.getName());
-            iv_icon.setImageResource(bearItem.getResId());
-            Log.d(TAG, "getView() - [ " + position + " ] " + bearItem.getName());
-*/
             //각 아이템 선택 event
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -121,4 +115,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //타이틀바 맨 우측 버튼
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        //길이 조정
+        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        //검색 시 힌트 추가
+        searchView.setQueryHint("화장품명을 검색합니다.");
+        MenuItem item_like = menu.add(0,0,0,"삭제하기");
+        item_like.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                //삭제코드구현
+                return true;
+            }
+        });
+        return true;
+    }
+
+    //타이틀바 우측 두번째, 검색 버튼
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        //검색버튼 눌렀을때, 이벤트 제어
+        if(id==R.id.search){
+            //검색했을때 쿼리 구현
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
