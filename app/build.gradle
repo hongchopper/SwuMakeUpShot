@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.2'
     compileOnly("org.jetbrains:annotations:13.0")
     testCompileOnly("org.jetbrains:annotations:13.0")
     implementation platform('com.google.firebase:firebase-bom:30.4.1')

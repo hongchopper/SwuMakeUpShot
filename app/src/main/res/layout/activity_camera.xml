@@ -33,7 +33,7 @@
             android:layout_margin="12dp"
             android:backgroundTint="#FFC107"
             android:onClick="onSelectImageClick"
-            android:text="저장하기"
+            android:text="분석하기"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
