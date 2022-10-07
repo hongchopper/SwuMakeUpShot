@@ -48,30 +48,19 @@
             android:text="분석하기"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+        <ImageView
+            android:id="@+id/quick_start_cropped_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="00dp"
+            android:layout_marginRight="10dp" />
 
-    <ImageView
-        android:id="@+id/quick_start_cropped_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="12dp"
-        android:backgroundTint="#FF9800"
-        android:text="확인"
-        android:visibility="invisible"
-        android:textColor="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/text_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="TextView" />
-
+        <TextView
+            android:id="@+id/text_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_margin="20dp"
+            android:text="TextView" />
 </LinearLayout>

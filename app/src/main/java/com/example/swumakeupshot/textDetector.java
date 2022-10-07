@@ -89,7 +89,19 @@ public class textDetector extends AppCompatActivity {
             }
         });
     }
+    // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
+    private void setImage(Uri uri) {
+        try{
+            InputStream in = getContentResolver().openInputStream(uri);
+            bitmap = BitmapFactory.decodeStream(in);
+            imageView.setImageBitmap(bitmap);
 
+            image = InputImage.fromBitmap(bitmap, 0);
+            Log.e("setImage", "이미지 to 비트맵");
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
     private void captureCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -131,35 +143,9 @@ public class textDetector extends AppCompatActivity {
                         photoFile);
                 //인텐트에 Uri담기
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-
                 //인텐트 실행
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
-        }
-    }
-
-//    @Override
-//    protected  void onActivityResult(int requestCode, int resultCode, Intent data){
-//        super.onActivityResult(requestCode,resultCode,data);
-//        if (requestCode == REQUEST_CODE) {
-//            // 갤러리에서 선택한 사진에 대한 uri를 가져온다.
-//            uri = data.getData();
-//            //Glide.with(this).load(uri).into(imageView);
-//            setImage(uri);
-//        }
-//    }
-
-    // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
-    private void setImage(Uri uri) {
-        try{
-            InputStream in = getContentResolver().openInputStream(uri);
-            bitmap = BitmapFactory.decodeStream(in);
-            imageView.setImageBitmap(bitmap);
-
-            image = InputImage.fromBitmap(bitmap, 0);
-            Log.e("setImage", "이미지 to 비트맵");
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
         }
     }
 
@@ -188,6 +174,12 @@ public class textDetector extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == REQUEST_CODE) {
+            // 갤러리에서 선택한 사진에 대한 uri를 가져온다.
+            uri = intent.getData();
+            //Glide.with(this).load(uri).into(imageView);
+            setImage(uri);
+        }
         try {
             //after capture
             switch (requestCode) {
@@ -197,13 +189,12 @@ public class textDetector extends AppCompatActivity {
                         File file = new File(mCurrentPhotoPath);
                         Bitmap bitmap = MediaStore.Images.Media
                                 .getBitmap(getContentResolver(), Uri.fromFile(file));
-
                         if (bitmap != null) {
                             ExifInterface ei = new ExifInterface(mCurrentPhotoPath);
                             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                                     ExifInterface.ORIENTATION_UNDEFINED);
 
-//                            //사진해상도가 너무 높으면 비트맵으로 로딩
+                            //사진해상도가 너무 높으면 비트맵으로 로딩
 //                            BitmapFactory.Options options = new BitmapFactory.Options();
 //                            options.inSampleSize = 8; //8분의 1크기로 비트맵 객체 생성
 //                            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
@@ -230,6 +221,7 @@ public class textDetector extends AppCompatActivity {
 
                             //Rotate한 bitmap을 ImageView에 저장
                             imageView.setImageBitmap(rotatedBitmap);
+                            image = InputImage.fromBitmap(bitmap, 0);
 
                         }
                     }
@@ -241,7 +233,6 @@ public class textDetector extends AppCompatActivity {
             Log.w(TAG, "onActivityResult Error !", e);
         }
     }
-
     //카메라에 맞게 이미지 로테이션
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
