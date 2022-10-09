@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.2'
     implementation 'com.google.mlkit:language-id:17.0.4'
     implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta6'
+    implementation 'com.google.mlkit:vision-common:17.2.1'
     compileOnly("org.jetbrains:annotations:13.0")
     testCompileOnly("org.jetbrains:annotations:13.0")
     implementation platform('com.google.firebase:firebase-bom:30.4.1')

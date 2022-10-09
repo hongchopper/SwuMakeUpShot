@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -57,7 +56,6 @@ public class textDetector extends AppCompatActivity {
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
-
 
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
