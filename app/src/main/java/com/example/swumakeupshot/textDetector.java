@@ -166,11 +166,15 @@ public class textDetector extends AppCompatActivity {
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
                                 for (Text.Element element: line.getElements()) {
-                                    String elementText = element.getText();
+                                    /*String elementText = element.getText();
                                     float confidence=element.getConfidence();
                                     Log.e("추출내용", elementText);
-                                    Log.e("추출신뢰도",String.valueOf(confidence));
+                                    Log.e("추출신뢰도",String.valueOf(confidence));*/
                                     for (Text.Symbol symbol: element.getSymbols()) {
+                                        String symbolText = symbol.getText();
+                                        float confidence=symbol.getConfidence();
+                                        Log.e("추출내용", symbolText);
+                                        Log.e("추출신뢰도",String.valueOf(confidence));
                                     }
                                 }
                             }
