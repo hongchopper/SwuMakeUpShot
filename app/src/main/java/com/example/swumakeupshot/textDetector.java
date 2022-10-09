@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -88,6 +90,7 @@ public class textDetector extends AppCompatActivity {
                 TextRecognition(recognizer);
             }
         });
+
     }
     // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
     private void setImage(Uri uri) {
@@ -156,9 +159,22 @@ public class textDetector extends AppCompatActivity {
                     @Override
                     public void onSuccess(Text visionText) {
                         Log.e("텍스트 인식", "성공");
-                        // Task completed successfully
+//                        // Task completed successfully
                         String resultText = visionText.getText();
                         text_info.setText(resultText);  // 인식한 텍스트를 TextView에 세팅
+                        Log.e("추출내용",resultText);
+                        for (Text.TextBlock block : visionText.getTextBlocks()) {
+                            for (Text.Line line: block.getLines()) {
+                                for (Text.Element element: line.getElements()) {
+                                    String elementText = element.getText();
+                                    float confidence=element.getConfidence();
+                                    Log.e("추출내용", elementText);
+                                    Log.e("추출신뢰도",String.valueOf(confidence));
+                                    for (Text.Symbol symbol: element.getSymbols()) {
+                                    }
+                                }
+                            }
+                        }
                     }
                 })
                 // 이미지 인식에 실패하면 실행되는 리스너
@@ -169,8 +185,8 @@ public class textDetector extends AppCompatActivity {
                                 Log.e("텍스트 인식", "실패: " + e.getMessage());
                             }
                         });
-
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
