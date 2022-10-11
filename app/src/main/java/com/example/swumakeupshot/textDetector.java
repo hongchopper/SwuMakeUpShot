@@ -66,7 +66,6 @@ public class textDetector extends AppCompatActivity {
         text_info = findViewById(R.id.text_info);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
-
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
         btnCamera.setOnClickListener(v -> captureCamera());

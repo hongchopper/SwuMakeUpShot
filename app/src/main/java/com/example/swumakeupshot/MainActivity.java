@@ -2,6 +2,8 @@ package com.example.swumakeupshot;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,9 +17,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,27 +38,41 @@ public class MainActivity extends AppCompatActivity {
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 
+    DBHelper helper;
+    SQLiteDatabase db;
+
+    String[] permissions = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         camerabtn=(FloatingActionButton)findViewById(R.id.camera_btn);
+        //권한요청
+        ActivityCompat.requestPermissions(MainActivity.this, permissions,  1);
 
         listview = (ListView) findViewById(R.id.main_listview);
         adapter = new ListViewAdapter();
 
-        //Adapter 안에 아이템의 정보 담기
-        adapter.addItem(new ListItem("1", "파랑이", R.drawable.ocean));
-        adapter.addItem(new ListItem("2", "민트트", R.drawable.ocean));
-        adapter.addItem(new ListItem("3", "하늘이", R.drawable.ocean));
-        adapter.addItem(new ListItem("4", "하양이", R.drawable.ocean));
-        adapter.addItem(new ListItem("5", "분홍이", R.drawable.ocean));
-        adapter.addItem(new ListItem("6", "노랑이", R.drawable.ocean));
-        adapter.addItem(new ListItem("7", "보라라", R.drawable.ocean));
-        adapter.addItem(new ListItem("8", "믹스스", R.drawable.ocean));
+        helper = new DBHelper(MainActivity.this, "newdb.db", null, 1);
+        db = helper.getWritableDatabase();
+        helper.onCreate(db);
 
-        //리스트뷰에 Adapter 설정
+        //쿼리
+        String sql = "select * from mytable;";
+        Cursor c = db.rawQuery(sql, null);
+        String[] strs = new String[]{"txt", "uri"};
+        int[] ints = new int[] {R.id.makeup_img, R.id.makeup_text};
+
+        MyCursorAdapter adapter = null;
+        adapter = new MyCursorAdapter(listview.getContext(), R.layout.main_list_item, c, strs, ints);
+        //SimpleCursorAdapter adapter = null;
+        //adapter = new SimpleCursorAdapter(listview.getContext(), R.layout.main_list_item, c, strs, ints,0);
+
         listview.setAdapter(adapter);
 
         camerabtn.setOnClickListener(new View.OnClickListener() {
