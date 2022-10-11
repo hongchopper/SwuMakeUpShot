@@ -197,7 +197,6 @@ public class textDetector extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             // 갤러리에서 선택한 사진에 대한 uri를 가져온다.
             uri = intent.getData();
-            //Glide.with(this).load(uri).into(imageView);
             setImage(uri);
         }
         try {
@@ -294,7 +293,6 @@ public class textDetector extends AppCompatActivity {
             case REQUEST_PERMISSION: {
                 // 권한이 취소되면 result 배열은 비어있다.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     Toast.makeText(this, "권한 확인", Toast.LENGTH_LONG).show();
 
                 } else {
