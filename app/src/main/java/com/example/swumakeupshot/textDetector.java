@@ -105,8 +105,6 @@ public class textDetector extends AppCompatActivity {
 
         // db에 있는 값들을 model을 적용해서 넣는다.
         ciList = mDbHelper.getTableData();
-        //Log.e("결과", String.valueOf(ciList));
-        //caution_text.setText((CharSequence) ciList);
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
         while (iterator.hasNext()) {
