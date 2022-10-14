@@ -43,6 +43,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class textDetector extends AppCompatActivity {
     static final int REQUEST_CODE = 2;
@@ -53,10 +55,12 @@ public class textDetector extends AppCompatActivity {
     Uri uri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
-    TextView text_info;     // ML 모델이 인식한 텍스트를 보여줄 뷰
+    TextView text_info,caution_text;     // ML 모델이 인식한 텍스트를 보여줄 뷰
     Button btn_get_image, btn_detection_image,btnCamera;  // 이미지 가져오기 버튼, 이미지 인식 버튼
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
+    public List<caution_ingredients> ciList ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,9 @@ public class textDetector extends AppCompatActivity {
 
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
+        caution_text=findViewById(R.id.caution_text);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
+
 
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
@@ -89,7 +95,32 @@ public class textDetector extends AppCompatActivity {
                 TextRecognition(recognizer);
             }
         });
+        initLoadDB();
+    }
+    private void initLoadDB() {
 
+        DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        // db에 있는 값들을 model을 적용해서 넣는다.
+        ciList = mDbHelper.getTableData();
+        //Log.e("결과", String.valueOf(ciList));
+        //caution_text.setText((CharSequence) ciList);
+        Iterator<caution_ingredients> iterator = ciList.iterator();
+
+        while (iterator.hasNext()) {
+            caution_ingredients element = iterator.next();
+            caution_text.append(element.getName());
+            caution_text.append("\n");
+            Log.e("결과", String.valueOf(element.getName()));
+            caution_text.append(element.getComment());
+            caution_text.append("\n");
+            Log.e("결과", String.valueOf(element.getComment()));
+        }
+
+        // db 닫기
+        mDbHelper.close();
     }
     // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
     private void setImage(Uri uri) {
