@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,11 +35,12 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -107,7 +106,7 @@ public class textDetector extends AppCompatActivity {
         ciList = mDbHelper.getTableData();
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
-        while (iterator.hasNext()) {
+        /*while (iterator.hasNext()) {
             caution_ingredients element = iterator.next();
             caution_text.append(element.getName());
             caution_text.append("\n");
@@ -115,7 +114,7 @@ public class textDetector extends AppCompatActivity {
             caution_text.append(element.getComment());
             caution_text.append("\n");
             Log.e("결과", String.valueOf(element.getComment()));
-        }
+        }*/
 
         // db 닫기
         mDbHelper.close();
@@ -189,20 +188,42 @@ public class textDetector extends AppCompatActivity {
                         Log.e("텍스트 인식", "성공");
 //                        // Task completed successfully
                         String resultText = visionText.getText();
-                        text_info.setText(resultText);  // 인식한 텍스트를 TextView에 세팅
-                        Log.e("추출내용",resultText);
+//                        text_info.setText(resultText);  // 인식한 텍스트를 TextView에 세팅
+
+                        char[] result=resultText.toCharArray();
+                        ArrayList<Character> ingredient=new ArrayList<>();
+                        ArrayList<Character> middle=new ArrayList<>();
+
+                        for(int i=0;i<result.length;i++){
+                            if (resultText.charAt(i)==','){
+                                Log.e("결과 쉼표","쉼표 발견");
+                                ingredient.addAll(middle);
+                                middle.clear();
+                                continue;
+                            }
+                            else{
+                                middle.add(result[i]);
+                            }
+                        }
+                        ingredient.addAll(middle);
+                        text_info.append(ingredient.toString());
+
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
+                                /*String elementText = line.getText();
+                                float confidence=line.getConfidence();
+                                Log.e("추출내용", elementText);
+                                Log.e("추출신뢰도",String.valueOf(confidence));*/
                                 for (Text.Element element: line.getElements()) {
                                     /*String elementText = element.getText();
                                     float confidence=element.getConfidence();
                                     Log.e("추출내용", elementText);
                                     Log.e("추출신뢰도",String.valueOf(confidence));*/
                                     for (Text.Symbol symbol: element.getSymbols()) {
-                                        String symbolText = symbol.getText();
+                                        /*String symbolText = symbol.getText();
                                         float confidence=symbol.getConfidence();
                                         Log.e("추출내용", symbolText);
-                                        Log.e("추출신뢰도",String.valueOf(confidence));
+                                        Log.e("추출신뢰도",String.valueOf(confidence));*/
                                     }
                                 }
                             }
@@ -215,6 +236,7 @@ public class textDetector extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("텍스트 인식", "실패: " + e.getMessage());
+                                Toast.makeText(getApplicationContext(),"텍스트 인식에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                             }
                         });
     }
