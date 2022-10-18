@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,12 +35,15 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class textDetector extends AppCompatActivity {
     static final int REQUEST_CODE = 2;
@@ -53,10 +54,12 @@ public class textDetector extends AppCompatActivity {
     Uri uri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
-    TextView text_info;     // ML 모델이 인식한 텍스트를 보여줄 뷰
+    TextView text_info,caution_text;     // ML 모델이 인식한 텍스트를 보여줄 뷰
     Button btn_get_image, btn_detection_image,btnCamera;  // 이미지 가져오기 버튼, 이미지 인식 버튼
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
+    public List<caution_ingredients> ciList ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,9 @@ public class textDetector extends AppCompatActivity {
 
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
+        caution_text=findViewById(R.id.caution_text);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
+
 
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
@@ -89,7 +94,30 @@ public class textDetector extends AppCompatActivity {
                 TextRecognition(recognizer);
             }
         });
+        initLoadDB();
+    }
+    private void initLoadDB() {
 
+        DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        // db에 있는 값들을 model을 적용해서 넣는다.
+        ciList = mDbHelper.getTableData();
+        Iterator<caution_ingredients> iterator = ciList.iterator();
+
+        /*while (iterator.hasNext()) {
+            caution_ingredients element = iterator.next();
+            caution_text.append(element.getName());
+            caution_text.append("\n");
+            Log.e("결과", String.valueOf(element.getName()));
+            caution_text.append(element.getComment());
+            caution_text.append("\n");
+            Log.e("결과", String.valueOf(element.getComment()));
+        }*/
+
+        // db 닫기
+        mDbHelper.close();
     }
     // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
     private void setImage(Uri uri) {
@@ -160,20 +188,51 @@ public class textDetector extends AppCompatActivity {
                         Log.e("텍스트 인식", "성공");
 //                        // Task completed successfully
                         String resultText = visionText.getText();
-                        text_info.setText(resultText);  // 인식한 텍스트를 TextView에 세팅
-                        Log.e("추출내용",resultText);
+                        System.out.println(resultText);
+
+                        char[] result=resultText.toCharArray();
+                        List<String> ingredient=new ArrayList<>();
+                        StringBuilder middle=new StringBuilder();
+
+                        for(int i=0;i<result.length;i++){
+                            if (resultText.charAt(i)==',' ||resultText.charAt(i)=='.'){
+                                ingredient.add(middle.toString());
+                                //text_info.append(middle);
+                                middle.delete(0,i);
+                                continue;
+                            }
+                            else{
+                                middle.append(resultText.charAt(i));
+                            }
+                        }
+                        //text_info.append(middle);
+                        ingredient.add(middle.toString());
+                        System.out.println(ingredient);
+                        for(int i = 0; i < ingredient.size(); i++) {
+                            if(i == ingredient.size()-1){
+                                text_info.append(ingredient.get(i));
+                            }else{
+                                text_info.append(ingredient.get(i));
+                                text_info.append(", ");
+                            }
+                        }
+
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
+                                /*String elementText = line.getText();
+                                float confidence=line.getConfidence();
+                                Log.e("추출내용", elementText);
+                                Log.e("추출신뢰도",String.valueOf(confidence));*/
                                 for (Text.Element element: line.getElements()) {
                                     /*String elementText = element.getText();
                                     float confidence=element.getConfidence();
                                     Log.e("추출내용", elementText);
                                     Log.e("추출신뢰도",String.valueOf(confidence));*/
                                     for (Text.Symbol symbol: element.getSymbols()) {
-                                        String symbolText = symbol.getText();
+                                        /*String symbolText = symbol.getText();
                                         float confidence=symbol.getConfidence();
                                         Log.e("추출내용", symbolText);
-                                        Log.e("추출신뢰도",String.valueOf(confidence));
+                                        Log.e("추출신뢰도",String.valueOf(confidence));*/
                                     }
                                 }
                             }
@@ -186,6 +245,7 @@ public class textDetector extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("텍스트 인식", "실패: " + e.getMessage());
+                                Toast.makeText(getApplicationContext(),"텍스트 인식에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                             }
                         });
     }
@@ -196,7 +256,6 @@ public class textDetector extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             // 갤러리에서 선택한 사진에 대한 uri를 가져온다.
             uri = intent.getData();
-            //Glide.with(this).load(uri).into(imageView);
             setImage(uri);
         }
         try {
@@ -293,7 +352,6 @@ public class textDetector extends AppCompatActivity {
             case REQUEST_PERMISSION: {
                 // 권한이 취소되면 result 배열은 비어있다.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     Toast.makeText(this, "권한 확인", Toast.LENGTH_LONG).show();
 
                 } else {

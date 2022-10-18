@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 
-    DBHelper helper;
+    //DBHelper helper;
     SQLiteDatabase db;
 
     String[] permissions = {
@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.main_listview);
         adapter = new ListViewAdapter();
 
-        helper = new DBHelper(MainActivity.this, "newdb.db", null, 1);
+        /*helper = new DBHelper(MainActivity.this, "newdb.db", null, 1);
         db = helper.getWritableDatabase();
-        helper.onCreate(db);
+        helper.onCreate(db);*//*
 
         //쿼리
         String sql = "select * from mytable;";
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         //SimpleCursorAdapter adapter = null;
         //adapter = new SimpleCursorAdapter(listview.getContext(), R.layout.main_list_item, c, strs, ints,0);
 
-        listview.setAdapter(adapter);
+        listview.setAdapter(adapter);*/
 
         camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
