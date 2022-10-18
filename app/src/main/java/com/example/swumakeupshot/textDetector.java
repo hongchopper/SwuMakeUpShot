@@ -188,25 +188,34 @@ public class textDetector extends AppCompatActivity {
                         Log.e("텍스트 인식", "성공");
 //                        // Task completed successfully
                         String resultText = visionText.getText();
-//                        text_info.setText(resultText);  // 인식한 텍스트를 TextView에 세팅
+                        System.out.println(resultText);
 
                         char[] result=resultText.toCharArray();
-                        ArrayList<Character> ingredient=new ArrayList<>();
-                        ArrayList<Character> middle=new ArrayList<>();
+                        List<String> ingredient=new ArrayList<>();
+                        StringBuilder middle=new StringBuilder();
 
                         for(int i=0;i<result.length;i++){
-                            if (resultText.charAt(i)==','){
-                                Log.e("결과 쉼표","쉼표 발견");
-                                ingredient.addAll(middle);
-                                middle.clear();
+                            if (resultText.charAt(i)==',' ||resultText.charAt(i)=='.'){
+                                ingredient.add(middle.toString());
+                                //text_info.append(middle);
+                                middle.delete(0,i);
                                 continue;
                             }
                             else{
-                                middle.add(result[i]);
+                                middle.append(resultText.charAt(i));
                             }
                         }
-                        ingredient.addAll(middle);
-                        text_info.append(ingredient.toString());
+                        //text_info.append(middle);
+                        ingredient.add(middle.toString());
+                        System.out.println(ingredient);
+                        for(int i = 0; i < ingredient.size(); i++) {
+                            if(i == ingredient.size()-1){
+                                text_info.append(ingredient.get(i));
+                            }else{
+                                text_info.append(ingredient.get(i));
+                                text_info.append(", ");
+                            }
+                        }
 
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
