@@ -207,7 +207,6 @@ public class textDetector extends AppCompatActivity {
                         }
                         //text_info.append(middle);
                         ingredient.add(middle.toString());
-                        System.out.println(ingredient);
                         for(int i = 0; i < ingredient.size(); i++) {
                             if(i == ingredient.size()-1){
                                 text_info.append(ingredient.get(i));
