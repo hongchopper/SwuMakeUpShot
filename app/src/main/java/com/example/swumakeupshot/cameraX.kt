@@ -27,7 +27,7 @@ import android.os.Build
 typealias LumaListener = (luma: Double) -> Unit
 
 class cameraX : AppCompatActivity() {
-    //바인딩 실패
+    //바인딩 실패...
     //private lateinit var viewBinding: ActivityMainBinding
 
     private var imageCapture: ImageCapture? = null
