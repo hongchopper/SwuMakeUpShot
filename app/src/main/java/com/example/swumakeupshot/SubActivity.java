@@ -71,7 +71,6 @@ public class SubActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(context, bearItem.getNum() + " 번 - " + bearItem.getName() + " 입니당! ", Toast.LENGTH_SHORT).show();
                 }
             });
 
