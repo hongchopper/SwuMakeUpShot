@@ -50,7 +50,7 @@ public class cameraX extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         mPreviewView = findViewById(R.id.quick_start_cropped_image);
-       // captureImage = findViewById(R.id.captureImg);
+       // captureImage = findViewById(R.id.captureImg); //버튼 연동
 
         if(allPermissionsGranted()){
             startCamera(); //start camera if permission has been granted by user
