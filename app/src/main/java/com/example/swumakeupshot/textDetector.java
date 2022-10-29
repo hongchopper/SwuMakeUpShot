@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -44,11 +45,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class textDetector extends AppCompatActivity {
     static final int REQUEST_CODE = 2;
     public static final int REQUEST_TAKE_PHOTO = 10;
     public static final int REQUEST_PERMISSION = 11;
+    private Executor executor = Executors.newSingleThreadExecutor();
+    private int REQUEST_CODE_PERMISSIONS = 1001;
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+
+    PreviewView mPreviewView;
 
     ImageView imageView;    // 갤러리에서 가져온 이미지를 보여줄 뷰
     Uri uri;                // 갤러리에서 가져온 이미지에 대한 Uri
@@ -351,10 +359,10 @@ public class textDetector extends AppCompatActivity {
             case REQUEST_PERMISSION: {
                 // 권한이 취소되면 result 배열은 비어있다.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "권한 확인", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "권한 확인", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(this, "권한 없음", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "권한 없음", Toast.LENGTH_SHORT).show();
                     finish(); //권한이 없으면 앱 종료
                 }
             }

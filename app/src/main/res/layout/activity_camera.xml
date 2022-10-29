@@ -48,20 +48,20 @@
             android:text="분석하기"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-        <!--<ImageView
+        <ImageView
             android:id="@+id/quick_start_cropped_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="00dp"
-            android:layout_marginRight="10dp" />-->
-    <androidx.camera.view.PreviewView
+            android:layout_marginRight="10dp" />
+    <!--<androidx.camera.view.PreviewView
         android:id="@+id/quick_start_cropped_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="00dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp" />-->
 
     <ScrollView
         android:id="@+id/scrollview"
