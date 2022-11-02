@@ -136,7 +136,6 @@ public class cameraX extends AppCompatActivity {
         CameraSelector cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
-//        preview.setSurfaceProvider(view_finder.getSurfaceProvider());
 
         executor = Executors.newSingleThreadExecutor();
 
@@ -203,17 +202,6 @@ public class cameraX extends AppCompatActivity {
                             }
                         });*//*
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(cameraX.this, "Image Saved successfully", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        });
 
                     }
                     @Override

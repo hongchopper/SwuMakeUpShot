@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -35,6 +36,8 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,7 +52,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class textDetector extends AppCompatActivity {
-    static final int REQUEST_CODE = 2;
+    //private String permission = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int REQUEST_CODE = 101;
+
+    private PermissionSupport permission;
+    //static final int REQUEST_CODE = 2;
     public static final int REQUEST_TAKE_PHOTO = 10;
     public static final int REQUEST_PERMISSION = 11;
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -67,6 +74,8 @@ public class textDetector extends AppCompatActivity {
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
     public List<caution_ingredients> ciList ;
+    private String[] permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +91,7 @@ public class textDetector extends AppCompatActivity {
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
         btnCamera.setOnClickListener(v -> captureCamera());
+
 
         // GET IMAGE 버튼
         btn_get_image = findViewById(R.id.getPic);
@@ -328,11 +338,12 @@ public class textDetector extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        checkPermission(); //권한체크
+        permissionCheck();
+
     }
 
     //권한 확인
-    public void checkPermission() {
+    /*public void checkPermission() {
         int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int permissionRead = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         int permissionWrite = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -350,9 +361,22 @@ public class textDetector extends AppCompatActivity {
                     Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
 
         }
+    }*/
+    private void permissionCheck(){
+        // sdk 23버전 이하 버전에서는 permission이 필요하지 않음
+        if(Build.VERSION.SDK_INT >= 23){
+
+            // 클래스 객체 생성
+            permission =  new PermissionSupport(this, this);
+
+            // 권한 체크한 후에 리턴이 false일 경우 권한 요청을 해준다.
+            if(!permission.checkPermission()){
+                permission.requestPermission();
+            }
+        }
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
@@ -365,8 +389,19 @@ public class textDetector extends AppCompatActivity {
                     Toast.makeText(this, "권한 없음", Toast.LENGTH_SHORT).show();
                     finish(); //권한이 없으면 앱 종료
                 }
+                break;
             }
         }
-    }
+    }*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        // 리턴이 false일 경우 다시 권한 요청
+        if (!permission.permissionResult(requestCode, permissions, grantResults)){
+            permission.requestPermission();
+        }
+    }
 }
+
+
