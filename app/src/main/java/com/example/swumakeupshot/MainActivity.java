@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
         camerabtn=(FloatingActionButton)findViewById(R.id.camera_btn);
-        cameraxbtn=(FloatingActionButton)findViewById(R.id.camerax_btn);
 
         //권한요청
         ActivityCompat.requestPermissions(MainActivity.this, permissions,  1);
