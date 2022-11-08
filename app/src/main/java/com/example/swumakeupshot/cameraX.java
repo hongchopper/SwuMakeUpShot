@@ -1,4 +1,3 @@
-/*
 package com.example.swumakeupshot;
 
 import androidx.annotation.NonNull;
@@ -16,12 +15,20 @@ import androidx.camera.view.PreviewView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -33,7 +40,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -45,6 +55,8 @@ public class cameraX extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private String imagePath1 = "";
+    private static final int REQUEST_IMAGE_1 = 1;
     private static final int REQUEST_CODE_CAMERA_PERMISSION = 200;
     private static final String[] PERMISSIONS = {Manifest.permission.CAMERA};
 
@@ -52,9 +64,9 @@ public class cameraX extends AppCompatActivity {
     TextView text_view;
     ImageButton camera_capture_button;
     PreviewView view_finder;
-
     Executor executor;
     private long mLastAnalysisResultTime;
+    Uri savedUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,28 +193,21 @@ public class cameraX extends AppCompatActivity {
         preview.setSurfaceProvider(view_finder.getSurfaceProvider());
         cameraProvider.bindToLifecycle((LifecycleOwner)this,
                 cameraSelector,imageCapture, imageAnalysis, preview);
-
         camera_capture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-                //File file = new File(getBatchDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
                 File file = new File(getBatchDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
-
                 ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
                 imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                        */
-/*new Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(cameraX.this, "Image Saved successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });*//*
-
-
+                        savedUri=Uri.fromFile(file);
+                        Intent callIntent=new Intent();
+                        callIntent.putExtra("xUri",savedUri);
+                        Log.e("사진파일 URI",savedUri.toString());
+                        setResult(0,callIntent.putExtra("xUri",savedUri));
+                        finish();
                     }
                     @Override
                     public void onError(@NonNull ImageCaptureException error) {
@@ -225,6 +230,4 @@ public class cameraX extends AppCompatActivity {
 
         return app_folder_path;
     }
-
-    }
-*/
+}

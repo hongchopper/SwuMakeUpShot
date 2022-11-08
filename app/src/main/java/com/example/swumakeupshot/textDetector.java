@@ -52,7 +52,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class textDetector extends AppCompatActivity {
-    //private String permission = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int REQUEST_CODE = 101;
 
     private PermissionSupport permission;
@@ -64,9 +63,8 @@ public class textDetector extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     PreviewView mPreviewView;
-
     ImageView imageView;    // 갤러리에서 가져온 이미지를 보여줄 뷰
-    Uri uri;                // 갤러리에서 가져온 이미지에 대한 Uri
+    Uri uri, xUri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
     TextView text_info,caution_text;     // ML 모델이 인식한 텍스트를 보여줄 뷰
@@ -90,7 +88,14 @@ public class textDetector extends AppCompatActivity {
 
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
-        btnCamera.setOnClickListener(v -> captureCamera());
+        //btnCamera.setOnClickListener(v -> captureCamera());
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), cameraX.class);
+                startActivityForResult(intent,0);
+            }
+        });
 
 
         // GET IMAGE 버튼
@@ -150,8 +155,13 @@ public class textDetector extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void getUri(){
+        Intent getIntent=getIntent();
+        String xUri=getIntent.getStringExtra("xUri");
+    }
     private void captureCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         // 인텐트를 처리 할 카메라 액티비티가 있는지 확인
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -194,7 +204,7 @@ public class textDetector extends AppCompatActivity {
                 //인텐트 실행
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
-        }
+        }*/
     }
 
     private void TextRecognition(TextRecognizer recognizer){
@@ -275,7 +285,30 @@ public class textDetector extends AppCompatActivity {
             uri = intent.getData();
             setImage(uri);
         }
-        try {
+        else if (requestCode == 0){
+            xUri=intent.getParcelableExtra("xUri");
+            try {
+
+                Bitmap bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), xUri);
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(60);
+
+                //Bitmap scaledBitmap = Bitmap.createScaledBitmap(bm, width, height, true);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+                imageView.setImageBitmap(rotatedBitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            setImage(xUri);
+            Log.e("URI 받기 성공",xUri.toString());
+        }
+        /*try {
             //after capture
             switch (requestCode) {
                 case REQUEST_TAKE_PHOTO: {
@@ -290,9 +323,9 @@ public class textDetector extends AppCompatActivity {
                                     ExifInterface.ORIENTATION_UNDEFINED);
 
                             //사진해상도가 너무 높으면 비트맵으로 로딩
-//                            BitmapFactory.Options options = new BitmapFactory.Options();
-//                            options.inSampleSize = 8; //8분의 1크기로 비트맵 객체 생성
-//                            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inSampleSize = 8; //8분의 1크기로 비트맵 객체 생성
+                            Bitmap bitmap2 = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 
                             Bitmap rotatedBitmap = null;
                             switch (orientation) {
@@ -326,7 +359,7 @@ public class textDetector extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.w(TAG, "onActivityResult Error !", e);
-        }
+        }*/
     }
     //카메라에 맞게 이미지 로테이션
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -397,10 +430,10 @@ public class textDetector extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // 리턴이 false일 경우 다시 권한 요청
+        /*// 리턴이 false일 경우 다시 권한 요청
         if (!permission.permissionResult(requestCode, permissions, grantResults)){
             permission.requestPermission();
-        }
+        }*/
     }
 }
 
