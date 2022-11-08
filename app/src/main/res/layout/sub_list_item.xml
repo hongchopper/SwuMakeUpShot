@@ -22,14 +22,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="전체 성분 / "
+                android:text="전체 성분 "
                 android:textSize="15dp" />
             <TextView
                 android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="5개" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,14 +65,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="기능성 / "
+                android:text="기능성 "
                 android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/good"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5개"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -111,13 +109,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="알러지 성분 / " />
+                android:text="알러지 성분 " />
 
             <TextView
                 android:id="@+id/allergy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5개"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -155,14 +152,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주의 성분 / "
+                android:text="주의 성분 "
                 android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/caution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5개"
                 android:textSize="15dp" />
         </LinearLayout>
 

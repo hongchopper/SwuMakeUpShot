@@ -67,7 +67,8 @@ public class textDetector extends AppCompatActivity {
     Uri uri, xUri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
-    TextView text_info,caution_text;     // ML 모델이 인식한 텍스트를 보여줄 뷰
+    TextView text_info,caution_text,good_text,allergy_text,all;     // ML 모델이 인식한 텍스트를 보여줄 뷰
+    int all_count;
     Button btn_get_image, btn_detection_image,btnCamera;  // 이미지 가져오기 버튼, 이미지 인식 버튼
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
@@ -83,6 +84,7 @@ public class textDetector extends AppCompatActivity {
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
         caution_text=findViewById(R.id.caution_text);
+        all=findViewById(R.id.all);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
 
@@ -156,10 +158,6 @@ public class textDetector extends AppCompatActivity {
         }
     }
 
-    private void getUri(){
-        Intent getIntent=getIntent();
-        String xUri=getIntent.getStringExtra("xUri");
-    }
     private void captureCamera() {
         /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -229,6 +227,9 @@ public class textDetector extends AppCompatActivity {
                                 middle.delete(0,i);
                                 continue;
                             }
+                            else if(resultText.charAt(i)=='\n'){
+                                continue;
+                            }
                             else{
                                 middle.append(resultText.charAt(i));
                             }
@@ -236,6 +237,7 @@ public class textDetector extends AppCompatActivity {
                         //text_info.append(middle);
                         ingredient.add(middle.toString());
                         for(int i = 0; i < ingredient.size(); i++) {
+                            all_count+=1;
                             if(i == ingredient.size()-1){
                                 text_info.append(ingredient.get(i));
                             }else{
@@ -243,7 +245,7 @@ public class textDetector extends AppCompatActivity {
                                 text_info.append(", ");
                             }
                         }
-
+                        all.setText(": "+all_count+" 개");
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
                                 /*String elementText = line.getText();
