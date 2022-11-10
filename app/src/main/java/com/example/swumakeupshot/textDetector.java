@@ -211,10 +211,10 @@ public class textDetector extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Text>() {
                     @Override
                     public void onSuccess(Text visionText) {
-                        Log.e("텍스트 인식", "성공");
 //                        // Task completed successfully
                         String resultText = visionText.getText();
-                        System.out.println(resultText);
+                        Log.e("텍스트 인식",resultText );
+                        //System.out.println(resultText);
 
                         char[] result=resultText.toCharArray();
                         List<String> ingredient=new ArrayList<>();
@@ -240,12 +240,20 @@ public class textDetector extends AppCompatActivity {
                             all_count+=1;
                             if(i == ingredient.size()-1){
                                 text_info.append(ingredient.get(i));
-                            }else{
+                            }else if(ingredient.get(i).contains("전성분") || ingredient.get(i).contains("성분")|| ingredient.get(i).contains("성분명")){
+                                Log.e("전성분 포함 글자",ingredient.get(i));
+                                String result2=ingredient.get(i).substring(4);
+                                Log.e("전성분 뺀 글자",result2);
+                                text_info.append(result2);
+                                text_info.append(", ");
+                                all_count-=1;
+                            }
+                            else{
                                 text_info.append(ingredient.get(i));
                                 text_info.append(", ");
                             }
                         }
-                        all.setText(": "+all_count+" 개");
+                        all.setText("/ "+all_count+" 개");
                         for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
                                 /*String elementText = line.getText();
