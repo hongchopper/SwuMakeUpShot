@@ -235,6 +235,7 @@ public class textDetector extends AppCompatActivity {
                             }
                         }
                         //text_info.append(middle);
+                        // ingredient 출력해보기
                         ingredient.add(middle.toString());
                         for(int i = 0; i < ingredient.size(); i++) {
                             all_count+=1;
