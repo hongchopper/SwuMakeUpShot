@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/makeup_someimg"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
         app:srcCompat="@drawable/ic_baseline_image_24" />
 
     <EditText

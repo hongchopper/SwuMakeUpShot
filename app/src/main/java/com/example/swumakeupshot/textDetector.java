@@ -61,14 +61,16 @@ public class textDetector extends AppCompatActivity {
     private Executor executor = Executors.newSingleThreadExecutor();
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    List<String> ingredient=new ArrayList<>();
+    StringBuilder middle=new StringBuilder();
 
     PreviewView mPreviewView;
     ImageView imageView;    // 갤러리에서 가져온 이미지를 보여줄 뷰
     Uri uri, xUri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
-    TextView text_info,caution_text,good_text,allergy_text,all;     // ML 모델이 인식한 텍스트를 보여줄 뷰
-    int all_count;
+    TextView text_info,caution_text,good_text,allergy_text,all,good,caution,allergy;     // ML 모델이 인식한 텍스트를 보여줄 뷰
+    int all_count,caution_count,allergy_count;
     Button btn_get_image, btn_detection_image,btnCamera;  // 이미지 가져오기 버튼, 이미지 인식 버튼
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
@@ -83,8 +85,13 @@ public class textDetector extends AppCompatActivity {
 
         imageView = findViewById(R.id.quick_start_cropped_image);
         text_info = findViewById(R.id.text_info);
-        caution_text=findViewById(R.id.caution_text);
         all=findViewById(R.id.all);
+        caution_text=findViewById(R.id.caution_text);
+        caution=findViewById(R.id.caution);
+        allergy_text=findViewById(R.id.allergy_text);
+        allergy=findViewById(R.id.allergy);
+        good_text=findViewById(R.id.good_text);
+        good=findViewById(R.id.good);
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
 
@@ -119,9 +126,8 @@ public class textDetector extends AppCompatActivity {
                 TextRecognition(recognizer);
             }
         });
-        initLoadDB();
     }
-    private void initLoadDB() {
+    private void initCautionDB() {
 
         DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
         mDbHelper.createDatabase();
@@ -131,16 +137,47 @@ public class textDetector extends AppCompatActivity {
         ciList = mDbHelper.getTableData();
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
-        /*while (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             caution_ingredients element = iterator.next();
-            caution_text.append(element.getName());
-            caution_text.append("\n");
-            Log.e("결과", String.valueOf(element.getName()));
-            caution_text.append(element.getComment());
-            caution_text.append("\n");
-            Log.e("결과", String.valueOf(element.getComment()));
-        }*/
+            for(int i = 0; i < ingredient.size(); i++){
+                if (ingredient.get(i).trim().equals(element.getName())){
+                    Log.e("위험성분 결과", String.valueOf(ingredient.get(i)));
+                    caution_count+=1;
+                    caution_text.append(ingredient.get(i));
+                    caution_text.append("\n");
+                    break;
+                }
+            }
+            caution.setText("/ "+caution_count+" 개");
+        }
 
+        // db 닫기
+        mDbHelper.close();
+    }
+    private void initAllergyDB() {
+
+        DataAdapter2 mDbHelper = new DataAdapter2(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        // db에 있는 값들을 model을 적용해서 넣는다.
+        ciList = mDbHelper.getTableData();
+        Iterator<caution_ingredients> iterator = ciList.iterator();
+
+        while (iterator.hasNext()) {
+            caution_ingredients element = iterator.next();
+            Log.e("전체 결과", element.getName());
+            for(int i = 0; i < ingredient.size(); i++){
+                if (ingredient.get(i).trim().equals(element.getName())) {
+                    Log.e("알러지 결과", String.valueOf(ingredient.get(i)));
+                    allergy_count += 1;
+                    allergy_text.append(ingredient.get(i));
+                    allergy_text.append("\n");
+                    break;
+                }
+            }
+        }
+        allergy.setText("/ "+allergy_count+" 개");
         // db 닫기
         mDbHelper.close();
     }
@@ -217,8 +254,6 @@ public class textDetector extends AppCompatActivity {
                         //System.out.println(resultText);
 
                         char[] result=resultText.toCharArray();
-                        List<String> ingredient=new ArrayList<>();
-                        StringBuilder middle=new StringBuilder();
 
                         for(int i=0;i<result.length;i++){
                             if (resultText.charAt(i)==',' ||resultText.charAt(i)=='.'){
@@ -254,27 +289,30 @@ public class textDetector extends AppCompatActivity {
                                 text_info.append(", ");
                             }
                         }
+                        initCautionDB();
+                        initAllergyDB();
                         all.setText("/ "+all_count+" 개");
-                        for (Text.TextBlock block : visionText.getTextBlocks()) {
+
+                        /*for (Text.TextBlock block : visionText.getTextBlocks()) {
                             for (Text.Line line: block.getLines()) {
-                                /*String elementText = line.getText();
+                                *//*String elementText = line.getText();
                                 float confidence=line.getConfidence();
                                 Log.e("추출내용", elementText);
-                                Log.e("추출신뢰도",String.valueOf(confidence));*/
+                                Log.e("추출신뢰도",String.valueOf(confidence));*//*
                                 for (Text.Element element: line.getElements()) {
-                                    /*String elementText = element.getText();
+                                    *//*String elementText = element.getText();
                                     float confidence=element.getConfidence();
                                     Log.e("추출내용", elementText);
-                                    Log.e("추출신뢰도",String.valueOf(confidence));*/
+                                    Log.e("추출신뢰도",String.valueOf(confidence));*//*
                                     for (Text.Symbol symbol: element.getSymbols()) {
-                                        /*String symbolText = symbol.getText();
+                                        *//*String symbolText = symbol.getText();
                                         float confidence=symbol.getConfidence();
                                         Log.e("추출내용", symbolText);
-                                        Log.e("추출신뢰도",String.valueOf(confidence));*/
+                                        Log.e("추출신뢰도",String.valueOf(confidence));*//*
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
                 })
                 // 이미지 인식에 실패하면 실행되는 리스너
