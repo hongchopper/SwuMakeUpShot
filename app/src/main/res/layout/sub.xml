@@ -9,6 +9,8 @@
     android:layout_height="match_parent"
     tools:context=".SubActivity">
 
+    <include layout="@layout/toolbar"/>
+
     <ImageView
         android:id="@+id/makeup_someimg"
         android:layout_width="match_parent"

@@ -8,29 +8,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar" />
+
     <androidx.camera.view.PreviewView
         android:id="@+id/view_finder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/text_prediction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_xsmall"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="665dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:text="@string/unknown" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include3">
+
+        <TextView
+            android:id="@+id/text_prediction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/unknown"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+    </androidx.camera.view.PreviewView>
 
     <!-- Camera control buttons -->
 
     <ImageButton
         android:id="@+id/camera_capture_button"
-        android:layout_width="@dimen/round_button_large"
-        android:layout_height="@dimen/round_button_large"
+        android:layout_width="@dimen/round_button_medium"
+        android:layout_height="@dimen/round_button_medium"
         android:layout_marginBottom="@dimen/shutter_button_margin"
         android:scaleType="fitCenter"
         android:background="@drawable/ic_shutter"

@@ -18,9 +18,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/makeupshot"
-        android:label="화장품 찰칵"
-        android:roundIcon="@drawable/makeupshot"
+        android:icon="@mipmap/light"
+        android:label="화안"
+        android:roundIcon="@mipmap/light_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SwuMakeUpShot"
         tools:targetApi="31">
