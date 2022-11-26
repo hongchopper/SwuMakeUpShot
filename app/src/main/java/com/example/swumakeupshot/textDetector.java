@@ -1,14 +1,12 @@
 package com.example.swumakeupshot;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +14,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +61,9 @@ public class textDetector extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     List<String> ingredient=new ArrayList<>();
+    List<String> anal_allergy=new ArrayList<>();
+    List<String> anal_caution=new ArrayList<>();
+    List<String> anal_good=new ArrayList<>();
     StringBuilder middle=new StringBuilder();
 
     PreviewView mPreviewView;
@@ -70,8 +72,9 @@ public class textDetector extends AppCompatActivity {
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
     TextView text_info,caution_text,good_text,allergy_text,all,good,caution,allergy;     // ML 모델이 인식한 텍스트를 보여줄 뷰
-    int all_count,caution_count,allergy_count;
-    Button btn_get_image, btn_detection_image,btnCamera;  // 이미지 가져오기 버튼, 이미지 인식 버튼
+    EditText cos_name;
+    int all_count,caution_count,allergy_count,good_count;
+    Button btn_get_image, btn_detection_image,btnCamera,btn_save;  // 이미지 가져오기 버튼, 이미지 인식 버튼
     TextRecognizer recognizer;    //텍스트 인식에 사용될 모델
     private String mCurrentPhotoPath;
     public List<caution_ingredients> ciList ;
@@ -83,17 +86,38 @@ public class textDetector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        imageView = findViewById(R.id.quick_start_cropped_image);
-        text_info = findViewById(R.id.text_info);
-        all=findViewById(R.id.all);
-        caution_text=findViewById(R.id.caution_text);
-        caution=findViewById(R.id.caution);
-        allergy_text=findViewById(R.id.allergy_text);
-        allergy=findViewById(R.id.allergy);
-        good_text=findViewById(R.id.good_text);
-        good=findViewById(R.id.good);
+        cos_name=(EditText)findViewById(R.id.makeup_editname);
+        imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
+        text_info = (TextView) findViewById(R.id.text_info);
+        all=(TextView)findViewById(R.id.all);
+        caution_text=(TextView)findViewById(R.id.caution_text);
+        caution=(TextView)findViewById(R.id.caution);
+        allergy_text=(TextView)findViewById(R.id.allergy_text);
+        allergy=(TextView)findViewById(R.id.allergy);
+        good_text=(TextView)findViewById(R.id.good_text);
+        good=(TextView)findViewById(R.id.good);
+
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
+        btn_save=findViewById(R.id.save);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0; i < anal_allergy.size(); i++){
+                    insertDB("anal_allergy","allergy_ingredient", anal_allergy.get(i));
+                }
+//                insertDB("anal_total","sum_allergy", String.valueOf(allergy_count));
+                for(int i = 0; i < anal_caution.size(); i++){
+                    insertDB("anal_cautious","cautious_ingredient", anal_caution.get(i));
+                }
+//                insertDB("anal_total","sum_caution", String.valueOf(caution_count));
+                for(int i = 0; i < anal_good.size(); i++){
+                    insertDB("anal_good","good_ingredient", anal_good.get(i));
+                }
+//                insertDB("anal_total","sum_good", String.valueOf(good_count));
+                insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count));
+            }
+        });
 
         // CAMERA CLICK 버튼
         btnCamera = findViewById(R.id.onCameraClick);
@@ -101,6 +125,8 @@ public class textDetector extends AppCompatActivity {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("버튼","카메라 버튼눌럿음");
+                permissionCheck();
                 Intent intent = new Intent(getApplicationContext(), cameraX.class);
                 startActivityForResult(intent,0);
             }
@@ -112,6 +138,7 @@ public class textDetector extends AppCompatActivity {
         btn_get_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("버튼","앨범 버튼눌럿음");
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, REQUEST_CODE);
@@ -123,6 +150,7 @@ public class textDetector extends AppCompatActivity {
         btn_detection_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("버튼","분석 버튼눌럿음");
                 TextRecognition(recognizer);
             }
         });
@@ -141,16 +169,19 @@ public class textDetector extends AppCompatActivity {
             caution_ingredients element = iterator.next();
             for(int i = 0; i < ingredient.size(); i++){
                 if (ingredient.get(i).trim().equals(element.getName())){
-                    Log.e("위험성분 결과", String.valueOf(ingredient.get(i)));
                     caution_count+=1;
+                    anal_caution.add(element.name);
+                    caution_text.append("• ");
                     caution_text.append(ingredient.get(i));
+                    caution_text.append(": ");
+                    caution_text.append(element.getComment());
                     caution_text.append("\n");
                     break;
                 }
             }
-            caution.setText("/ "+caution_count+" 개");
         }
-
+        Log.e("주의성분 결과", String.valueOf(anal_caution));
+        caution.setText("/ "+caution_count+" 개");
         // db 닫기
         mDbHelper.close();
     }
@@ -166,21 +197,86 @@ public class textDetector extends AppCompatActivity {
 
         while (iterator.hasNext()) {
             caution_ingredients element = iterator.next();
-            Log.e("전체 결과", element.getName());
+//            Log.e("전체 결과", element.getName());
             for(int i = 0; i < ingredient.size(); i++){
                 if (ingredient.get(i).trim().equals(element.getName())) {
-                    Log.e("알러지 결과", String.valueOf(ingredient.get(i)));
                     allergy_count += 1;
+                    anal_allergy.add(element.name);
+                    allergy_text.append("• ");
                     allergy_text.append(ingredient.get(i));
+                    allergy_text.append(": ");
+                    allergy_text.append(element.getComment());
                     allergy_text.append("\n");
                     break;
                 }
             }
         }
+        Log.e("알러지 결과", String.valueOf(anal_allergy));
         allergy.setText("/ "+allergy_count+" 개");
         // db 닫기
         mDbHelper.close();
     }
+
+    private void initGoodDB() {
+
+        DataAdapter3 mDbHelper = new DataAdapter3(getApplicationContext());
+        mDbHelper.createDatabase();
+        mDbHelper.open();
+
+        // db에 있는 값들을 model을 적용해서 넣는다.
+        ciList = mDbHelper.getTableData();
+        Iterator<caution_ingredients> iterator = ciList.iterator();
+
+        while (iterator.hasNext()) {
+            caution_ingredients element = iterator.next();
+            for(int i = 0; i < ingredient.size(); i++){
+                if (ingredient.get(i).trim().equals(element.getName())){
+                    good_count+=1;
+                    anal_good.add(element.name);
+                    good_text.append("• ");
+                    good_text.append(ingredient.get(i));
+                    good_text.append(": ");
+                    good_text.append(element.getComment());
+                    good_text.append("\n");
+                    break;
+                }
+            }
+        }
+        Log.e("좋은성분 결과", String.valueOf(anal_good));
+        good.setText("/ "+good_count+" 개");
+        // db 닫기
+        mDbHelper.close();
+    }
+
+    private void insertDB(String table_name,String col_name,String name){
+        DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put("cos_name",cos_name.getText().toString());
+        cv.put(col_name,name);
+
+        db.insert(table_name,col_name,cv);
+        Log.e("삽입 결과",name);
+        db.close();
+        dbHelper.close();
+    }
+    private void insertTotalDB(String table_name,String col_name1,String name1,String col_name2,String name2,String col_name3,String name3){
+        DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put("cos_name",cos_name.getText().toString());
+        cv.put(col_name1,name1);
+        cv.put(col_name2,name2);
+        cv.put(col_name3,name3);
+
+        db.insert(table_name,null,cv);
+        //Log.e("삽입 결과",name);
+        db.close();
+        dbHelper.close();
+    }
+
     // uri를 비트맵으로 변환시킨후 이미지뷰에 띄워주고 InputImage를 생성하는 메서드
     private void setImage(Uri uri) {
         try{
@@ -291,6 +387,7 @@ public class textDetector extends AppCompatActivity {
                         }
                         initCautionDB();
                         initAllergyDB();
+                        initGoodDB();
                         all.setText("/ "+all_count+" 개");
 
                         /*for (Text.TextBlock block : visionText.getTextBlocks()) {
@@ -417,33 +514,6 @@ public class textDetector extends AppCompatActivity {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        permissionCheck();
-
-    }
-
-    //권한 확인
-    /*public void checkPermission() {
-        int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        int permissionRead = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        int permissionWrite = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        //권한이 없으면 권한 요청
-        if (permissionCamera != PackageManager.PERMISSION_GRANTED
-                || permissionRead != PackageManager.PERMISSION_GRANTED
-                || permissionWrite != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                Toast.makeText(this, "이 앱을 실행하기 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
-            }
-
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
-
-        }
-    }*/
     private void permissionCheck(){
         // sdk 23버전 이하 버전에서는 permission이 필요하지 않음
         if(Build.VERSION.SDK_INT >= 23){

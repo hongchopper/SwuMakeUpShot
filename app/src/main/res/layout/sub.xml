@@ -17,13 +17,13 @@
 
     <EditText
         android:id="@+id/makeup_editname"
-        android:layout_width="wrap_content"
+        android:layout_width="232dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
         android:ems="10"
         android:hint="화장품 이름"
         android:inputType="textPersonName"
+        android:padding="10dp"
         android:textSize="13dp" />
 
     <ScrollView

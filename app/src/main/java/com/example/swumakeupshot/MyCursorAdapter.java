@@ -1,3 +1,4 @@
+/*
 package com.example.swumakeupshot;
 
 import android.content.Context;
@@ -46,4 +47,4 @@ public class MyCursorAdapter extends SimpleCursorAdapter {
 
         return (v);
     }
-}
+}*/

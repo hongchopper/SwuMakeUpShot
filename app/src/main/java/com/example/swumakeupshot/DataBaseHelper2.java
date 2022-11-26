@@ -1,5 +1,6 @@
 package com.example.swumakeupshot;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,23 +13,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DataBaseHelper extends SQLiteOpenHelper
+public class DataBaseHelper2 extends SQLiteOpenHelper
 {
 
-    private static String TAG = "DataBaseHelper"; //Logcat에 출력할 태그이름
+    private static String TAG = "DataBaseHelper2"; //Logcat에 출력할 태그이름
 
     //디바이스 장치에서 데이터베이스의 경로
 
     // TODO : assets 폴더에 있는 경우 "", 그 외 경로기입
     private static String DB_PATH = "";
     // TODO : assets 폴더에 있는 DB명 또는 별도의 데이터베이스 파일이름
-    private static String DB_NAME ="cosmetic_file.db";
+    private static String DB_NAME ="anal_cosmetic.db";
+    private String TABLE_NAME;
+    public static final String COL_1="cos_name";
+    public static final String COL_2="all_ingredient";
+    public static final String COL_3="cautious_ingredient";
+    public static final String COL_4="allergic_ingredient";
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
-    private String dbname;
 
-    public DataBaseHelper(Context context)
+    public DataBaseHelper2(Context context)
     {
         super(context, DB_NAME, null, 2);// 1은 데이터베이스 버젼
         if(android.os.Build.VERSION.SDK_INT >= 17){
@@ -118,5 +123,12 @@ public class DataBaseHelper extends SQLiteOpenHelper
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.disableWriteAheadLogging();
+    }
+    public void insertCautionData(String TABLE_NAME,String cos_name,String caution){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COL_1,cos_name);
+        contentValues.put(COL_3,caution);
+        db.insert(TABLE_NAME,null,contentValues);
     }
 }

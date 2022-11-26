@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton camerabtn,cameraxbtn;
+    FloatingActionButton camerabtn;
     private ListView listview = null;
     private ListViewAdapter adapter = null;
 

@@ -5,30 +5,30 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.TextView;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataAdapter2
+public class DataAdapter3
 {
     protected static final String TAG = "DataAdapter";
 
     // TODO : TABLE 이름을 명시해야함
-    protected static final String TABLE_NAME = "allergy_ingredients_table";
-
+    protected static final String TABLE_NAME = "good_ingredients_table";
     private final Context mContext;
     private SQLiteDatabase mDb;
     private DataBaseHelper mDbHelper;
 
-    public DataAdapter2(Context context)
+    public DataAdapter3(Context context)
     {
         this.mContext = context;
         mDbHelper = new DataBaseHelper(mContext);
     }
 
-    public DataAdapter2 createDatabase() throws SQLException
+    public DataAdapter3 createDatabase() throws SQLException
     {
         try
         {
@@ -42,7 +42,7 @@ public class DataAdapter2
         return this;
     }
 
-    public DataAdapter2 open() throws SQLException
+    public DataAdapter3 open() throws SQLException
     {
         try
         {
@@ -104,4 +104,3 @@ public class DataAdapter2
     }
 
 }
-
