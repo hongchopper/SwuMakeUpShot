@@ -102,7 +102,7 @@ public class textDetector extends AppCompatActivity {
 
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
-        btn_save=findViewById(R.id.save);
+        //btn_save=findViewById(R.id.save);
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

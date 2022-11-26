@@ -7,6 +7,15 @@ public class ListItem {
     String caution_count;
     String allergy_count;
     String good_count;
+    int resId;
+
+    public int getResId() {
+        return resId;
+    }
+
+    public void setResId(int resId) {
+        this.resId = resId;
+    }
 
     public String getCos_name() {
         return cos_name;
