@@ -102,7 +102,7 @@ public class textDetector extends AppCompatActivity {
 
         recognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());    //텍스트 인식에 사용될 모델
 
-        //btn_save=findViewById(R.id.save);
+        btn_save=findViewById(R.id.save);
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,8 +153,8 @@ public class textDetector extends AppCompatActivity {
         btn_detection_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("버튼","분석 버튼눌럿음");
                 TextRecognition(recognizer);
+                Intent intent=new Intent(getApplicationContext(),SubActivity.class);
             }
         });
     }
@@ -177,6 +177,19 @@ public class textDetector extends AppCompatActivity {
                     caution_text.append("• ");
                     caution_text.append(ingredient.get(i));
                     caution_text.append(": ");
+                    caution_text.append(element.getComment());
+                    caution_text.append("\n");
+                    break;
+                }
+                else if(ingredient.get(i).trim().equals(element.getEng_name())){
+                    caution_count+=1;
+                    anal_caution.add(element.name);
+                    caution_text.append("• ");
+                    caution_text.append(ingredient.get(i));
+                    caution_text.append("(= ");
+                    caution_text.append(element.name);
+                    caution_text.append("): ");
+                    //caution_text.append(": ");
                     caution_text.append(element.getComment());
                     caution_text.append("\n");
                     break;
@@ -208,6 +221,18 @@ public class textDetector extends AppCompatActivity {
                     allergy_text.append("• ");
                     allergy_text.append(ingredient.get(i));
                     allergy_text.append(": ");
+                    allergy_text.append(element.getComment());
+                    allergy_text.append("\n");
+                    break;
+                }
+                else if(ingredient.get(i).trim().equals(element.getEng_name())){
+                    allergy_count+=1;
+                    anal_allergy.add(element.name);
+                    allergy_text.append("• ");
+                    allergy_text.append(ingredient.get(i));
+                    allergy_text.append("(= ");
+                    allergy_text.append(element.name);
+                    allergy_text.append("): ");
                     allergy_text.append(element.getComment());
                     allergy_text.append("\n");
                     break;
@@ -339,6 +364,7 @@ public class textDetector extends AppCompatActivity {
                                 text_info.append(ingredient.get(i));
                                 text_info.append(", ");
                             }
+                            Log.e("전체 결과", ingredient.get(i));
                         }
                         initCautionDB();
                         initAllergyDB();

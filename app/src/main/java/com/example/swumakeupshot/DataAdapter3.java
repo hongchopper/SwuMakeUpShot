@@ -88,8 +88,7 @@ public class DataAdapter3
                     // TODO : Record 기술
                     ci.setName(mCur.getString(0));
                     ci.setComment(mCur.getString(1));
-                    /*Log.e("결과",ci.getName());
-                    Log.e("결과",ci.getComment());*/
+                    ci.setEng_name(mCur.getString(2));
                     // 리스트에 넣기
                     ciList.add(ci);
                 }
