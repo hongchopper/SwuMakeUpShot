@@ -96,12 +96,12 @@
                 android:orientation="horizontal"
                 android:weightSum="100" >
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/makeup_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="성분명1, 성분명2, 성분명3, 성분명4, ..."
-                    android:textSize="10dp" />
+                    android:textSize="10dp" />-->
             </LinearLayout>
         </LinearLayout>
 

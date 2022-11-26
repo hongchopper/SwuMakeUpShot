@@ -2,6 +2,7 @@ package com.example.swumakeupshot;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -66,7 +67,6 @@ public class textDetector extends AppCompatActivity {
     List<String> anal_good=new ArrayList<>();
     StringBuilder middle=new StringBuilder();
 
-    PreviewView mPreviewView;
     ImageView imageView;    // 갤러리에서 가져온 이미지를 보여줄 뷰
     Uri uri, xUri;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
@@ -81,11 +81,14 @@ public class textDetector extends AppCompatActivity {
     private String[] permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,
     Manifest.permission.READ_EXTERNAL_STORAGE};
 
+    public static Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
+        context=this;
         cos_name=(EditText)findViewById(R.id.makeup_editname);
         imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
         text_info = (TextView) findViewById(R.id.text_info);
@@ -106,17 +109,17 @@ public class textDetector extends AppCompatActivity {
                 for(int i = 0; i < anal_allergy.size(); i++){
                     insertDB("anal_allergy","allergy_ingredient", anal_allergy.get(i));
                 }
-//                insertDB("anal_total","sum_allergy", String.valueOf(allergy_count));
                 for(int i = 0; i < anal_caution.size(); i++){
                     insertDB("anal_cautious","cautious_ingredient", anal_caution.get(i));
                 }
-//                insertDB("anal_total","sum_caution", String.valueOf(caution_count));
                 for(int i = 0; i < anal_good.size(); i++){
                     insertDB("anal_good","good_ingredient", anal_good.get(i));
                 }
-//                insertDB("anal_total","sum_good", String.valueOf(good_count));
                 insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count));
+                ((MainActivity)MainActivity.context).displayList();
             }
+
+
         });
 
         // CAMERA CLICK 버튼
@@ -291,53 +294,6 @@ public class textDetector extends AppCompatActivity {
         }
     }
 
-    private void captureCamera() {
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        // 인텐트를 처리 할 카메라 액티비티가 있는지 확인
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
-            // 촬영한 사진을 저장할 파일 생성
-            File photoFile = null;
-
-            try {
-                //임시로 사용할 파일이므로 경로는 캐시폴더로
-                File tempDir = getCacheDir();
-
-                //임시촬영파일 세팅
-                String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
-                String imageFileName = "Capture_" + timeStamp + "_"; //ex) Capture_20201206_
-
-                File tempImage = File.createTempFile(
-                        imageFileName,  //파일이름
-                        ".jpg",    // 파일형식
-                        tempDir      //경로
-                );
-
-                // ACTION_VIEW 인텐트를 사용할 경로 (임시파일의 경로)
-                mCurrentPhotoPath = tempImage.getAbsolutePath();
-
-                photoFile = tempImage;
-
-            } catch (IOException e) {
-                //에러 로그는 이렇게 관리하는 편이 좋다.
-                Log.w(TAG, "파일 생성 에러!", e);
-            }
-
-            //파일이 정상적으로 생성되었다면 계속 진행
-            if (photoFile != null) {
-                //Uri 가져오기
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        getPackageName() + ".fileprovider",
-                        photoFile);
-                //인텐트에 Uri담기
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                //인텐트 실행
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }*/
-    }
-
     private void TextRecognition(TextRecognizer recognizer){
         Task<Text> result = recognizer.process(image)
                 // 이미지 인식에 성공하면 실행되는 리스너
@@ -347,7 +303,6 @@ public class textDetector extends AppCompatActivity {
 //                        // Task completed successfully
                         String resultText = visionText.getText();
                         Log.e("텍스트 인식",resultText );
-                        //System.out.println(resultText);
 
                         char[] result=resultText.toCharArray();
 
@@ -389,27 +344,6 @@ public class textDetector extends AppCompatActivity {
                         initAllergyDB();
                         initGoodDB();
                         all.setText("/ "+all_count+" 개");
-
-                        /*for (Text.TextBlock block : visionText.getTextBlocks()) {
-                            for (Text.Line line: block.getLines()) {
-                                *//*String elementText = line.getText();
-                                float confidence=line.getConfidence();
-                                Log.e("추출내용", elementText);
-                                Log.e("추출신뢰도",String.valueOf(confidence));*//*
-                                for (Text.Element element: line.getElements()) {
-                                    *//*String elementText = element.getText();
-                                    float confidence=element.getConfidence();
-                                    Log.e("추출내용", elementText);
-                                    Log.e("추출신뢰도",String.valueOf(confidence));*//*
-                                    for (Text.Symbol symbol: element.getSymbols()) {
-                                        *//*String symbolText = symbol.getText();
-                                        float confidence=symbol.getConfidence();
-                                        Log.e("추출내용", symbolText);
-                                        Log.e("추출신뢰도",String.valueOf(confidence));*//*
-                                    }
-                                }
-                            }
-                        }*/
                     }
                 })
                 // 이미지 인식에 실패하면 실행되는 리스너
