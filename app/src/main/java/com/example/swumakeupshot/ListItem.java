@@ -3,34 +3,40 @@ package com.example.swumakeupshot;
 public class ListItem {
     /* 아이템의 정보를 담기 위한 클래스 */
 
-    String num;
-    String name;
-    int resId;
+    String cos_name;
+    String caution_count;
+    String allergy_count;
+    String good_count;
 
-    public ListItem(String num, String name, int resId) {
-        this.num = num;
-        this.name = name;
-        this.resId = resId;
-    }
-
-    public String getNum() {
-        return num;
-    }
-    public void setNum(String num) {
-        this.num = num;
+    public String getCos_name() {
+        return cos_name;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public void setCos_name(String cos_name) {
+        this.cos_name = cos_name;
     }
 
-    public int getResId() {
-        return resId;
+    public String getCaution_count() {
+        return caution_count;
     }
-    public void setResId(int resId) {
-        this.resId = resId;
+
+    public void setCaution_count(String caution_count) {
+        this.caution_count = caution_count;
+    }
+
+    public String getAllergy_count() {
+        return allergy_count;
+    }
+
+    public void setAllergy_count(String allergy_count) {
+        this.allergy_count = allergy_count;
+    }
+
+    public String getGood_count() {
+        return good_count;
+    }
+
+    public void setGood_count(String good_count) {
+        this.good_count = good_count;
     }
 }
