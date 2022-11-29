@@ -5,49 +5,6 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_circle_grey" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전체 성분 "
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/border">
-
-            <TextView
-                android:id="@+id/text_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="성분들 이름"
-                android:textSize="13dp" />
-        </LinearLayout>
-    </LinearLayout>
-
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
@@ -178,6 +135,78 @@
                 android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_circle_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체 성분 "
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border">
+
+            <TextView
+                android:id="@+id/text_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="성분들 이름"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/onBackPress"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/teal_200"
+            android:drawableLeft="@drawable/ic_baseline_receipt_24"
+            android:layout_margin="3dp"
+            android:text="뒤로가기"
+            android:textColor="#2C2C2C"
+            android:textSize="11dp" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:drawableLeft="@drawable/ic_baseline_save_24"
+            android:text="저장하기"
+            android:textColor="#2C2C2C"
+            android:textSize="11dp" />
+    </LinearLayout>
 
 </LinearLayout>

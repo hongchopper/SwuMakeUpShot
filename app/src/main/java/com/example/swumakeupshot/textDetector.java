@@ -145,6 +145,7 @@ public class textDetector extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, REQUEST_CODE);
+
             }
         });
 
@@ -153,8 +154,11 @@ public class textDetector extends AppCompatActivity {
         btn_detection_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextRecognition(recognizer);
-                Intent intent=new Intent(getApplicationContext(),SubActivity.class);
+                //TextRecognition(recognizer);
+                Intent callIntent=new Intent(getApplicationContext(), SubActivity.class);
+                callIntent.putExtra("Uri",xUri);
+                callIntent.putExtra("Uri",uri);
+                startActivity(callIntent);
             }
         });
     }
@@ -319,7 +323,7 @@ public class textDetector extends AppCompatActivity {
         }
     }
 
-    private void TextRecognition(TextRecognizer recognizer){
+    public void TextRecognition(TextRecognizer recognizer){
         Task<Text> result = recognizer.process(image)
                 // 이미지 인식에 성공하면 실행되는 리스너
                 .addOnSuccessListener(new OnSuccessListener<Text>() {
