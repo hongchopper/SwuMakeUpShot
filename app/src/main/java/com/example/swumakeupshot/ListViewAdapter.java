@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView caution = (TextView)view.findViewById(R.id.caution);
         TextView allergy = (TextView)view.findViewById(R.id.allergy);
         TextView good = (TextView)view.findViewById(R.id.good);
+        ImageView image=view.findViewById(R.id.makeup_img);
 
         //현재 포지션에 해당하는 아이템에 글자를 적용하기 위해 list배열에서 객체를 가져온다.
         ListItem listdata = list.get(i);
@@ -55,11 +57,10 @@ public class ListViewAdapter extends BaseAdapter {
         allergy.setText(listdata.getAllergy_count());
         good.setText(listdata.getGood_count());
 
-
         return view;
     }
 
-    //ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방시으로 구현해도 됨
+    //ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
     public void addItemToList(String name, String caution,String allergy, String good){
         ListItem listdata = new ListItem();
 
@@ -70,6 +71,14 @@ public class ListViewAdapter extends BaseAdapter {
 
         //값들의 조립이 완성된 listdata객체 한개를 list배열에 추가
         list.add(listdata);
+    }
+    public void addItemToList2(String name, String uri){
+        ListItem listdata = new ListItem();
 
+        listdata.setCos_name(name);
+        listdata.setUri(uri);
+
+        //값들의 조립이 완성된 listdata객체 한개를 list배열에 추가
+        list.add(listdata);
     }
 }

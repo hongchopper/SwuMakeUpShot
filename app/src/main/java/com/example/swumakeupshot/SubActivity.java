@@ -43,15 +43,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class SubActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 101;
-
-    private PermissionSupport permission;
-    //static final int REQUEST_CODE = 2;
-    public static final int REQUEST_TAKE_PHOTO = 10;
-    public static final int REQUEST_PERMISSION = 11;
-    private Executor executor = Executors.newSingleThreadExecutor();
-    private int REQUEST_CODE_PERMISSIONS = 1001;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     List<String> ingredient=new ArrayList<>();
     List<String> anal_allergy=new ArrayList<>();
     List<String> anal_caution=new ArrayList<>();
@@ -68,8 +59,6 @@ public class SubActivity extends AppCompatActivity {
     Bitmap bitmap;
     InputImage image;
     public List<caution_ingredients> ciList ;
-    private String[] permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE};
     public static Context context;
 
     @Override
@@ -109,6 +98,7 @@ public class SubActivity extends AppCompatActivity {
                 for(int i = 0; i < anal_good.size(); i++){
                     insertDB("anal_good","good_ingredient", anal_good.get(i));
                 }
+                insertDB("cos_image","uri", uri.toString());
                 insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count));
                 ((MainActivity)MainActivity.context).displayList();
             }
@@ -117,6 +107,7 @@ public class SubActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),textDetector.class);
+                startActivity(intent);
             }
         });
 
@@ -143,7 +134,7 @@ public class SubActivity extends AppCompatActivity {
         mDbHelper.open();
 
         // db에 있는 값들을 model을 적용해서 넣는다.
-        ciList = mDbHelper.getTableData();
+        ciList = mDbHelper.getTableData("caution_ingredients_table");
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
         while (iterator.hasNext()) {
@@ -181,12 +172,12 @@ public class SubActivity extends AppCompatActivity {
     }
     private void initAllergyDB() {
 
-        DataAdapter2 mDbHelper = new DataAdapter2(getApplicationContext());
+        DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
         mDbHelper.createDatabase();
         mDbHelper.open();
 
         // db에 있는 값들을 model을 적용해서 넣는다.
-        ciList = mDbHelper.getTableData();
+        ciList = mDbHelper.getTableData("allergy_ingredients_table");
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
         while (iterator.hasNext()) {
@@ -225,12 +216,12 @@ public class SubActivity extends AppCompatActivity {
 
     private void initGoodDB() {
 
-        DataAdapter3 mDbHelper = new DataAdapter3(getApplicationContext());
+        DataAdapter mDbHelper = new DataAdapter(getApplicationContext());
         mDbHelper.createDatabase();
         mDbHelper.open();
 
         // db에 있는 값들을 model을 적용해서 넣는다.
-        ciList = mDbHelper.getTableData();
+        ciList = mDbHelper.getTableData("good_ingredients_table");
         Iterator<caution_ingredients> iterator = ciList.iterator();
 
         while (iterator.hasNext()) {
@@ -253,6 +244,20 @@ public class SubActivity extends AppCompatActivity {
         // db 닫기
         mDbHelper.close();
     }
+
+    /*private void insertUriDB(String table_name,String col_name, Uri uri){
+        DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put("cos_name",cos_name.getText().toString());
+        cv.put(col_name, String.valueOf(uri));
+
+        db.insert(table_name,col_name,cv);
+        //Log.e("삽입 결과",name);
+        db.close();
+        dbHelper.close();
+    }*/
 
     private void insertDB(String table_name,String col_name,String name){
         DataBaseHelper2 dbHelper=new DataBaseHelper2(this);

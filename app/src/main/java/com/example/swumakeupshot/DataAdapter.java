@@ -17,7 +17,7 @@ public class DataAdapter
     protected static final String TAG = "DataAdapter";
 
     // TODO : TABLE 이름을 명시해야함
-    protected static final String TABLE_NAME = "caution_ingredients_table";
+    //protected static final String TABLE_NAME = "caution_ingredients_table";
 
     private final Context mContext;
     private SQLiteDatabase mDb;
@@ -64,7 +64,7 @@ public class DataAdapter
         mDbHelper.close();
     }
 
-    public List getTableData()
+    public List getTableData(String TABLE_NAME)
     {
         try
         {

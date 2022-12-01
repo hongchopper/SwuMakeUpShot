@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.TextView;
 
 
 import java.io.IOException;
@@ -13,10 +14,9 @@ import java.util.List;
 
 public class DataAdapter2
 {
-    protected static final String TAG = "DataAdapter";
+    protected static final String TAG = "DataAdapter2";
 
     // TODO : TABLE 이름을 명시해야함
-    protected static final String TABLE_NAME = "allergy_ingredients_table";
 
     private final Context mContext;
     private SQLiteDatabase mDb;
@@ -63,7 +63,7 @@ public class DataAdapter2
         mDbHelper.close();
     }
 
-    public List getTableData()
+    public List getTableData(String TABLE_NAME)
     {
         try
         {
@@ -74,7 +74,7 @@ public class DataAdapter2
             List ciList = new ArrayList();
 
             // TODO : 모델 선언
-            caution_ingredients ci = null;
+            anal_cos ci = null;
 
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
@@ -83,12 +83,11 @@ public class DataAdapter2
                 while( mCur.moveToNext() ) {
 
                     // TODO : 커스텀 모델 생성
-                    ci = new caution_ingredients();
+                    ci = new anal_cos();
 
                     // TODO : Record 기술
-                    ci.setName(mCur.getString(0));
-                    ci.setComment(mCur.getString(1));
-                    ci.setEng_name(mCur.getString(2));
+                    ci.setCos_name(mCur.getString(0));
+                    ci.setData(mCur.getString(1));
                     // 리스트에 넣기
                     ciList.add(ci);
                 }
@@ -103,4 +102,3 @@ public class DataAdapter2
     }
 
 }
-

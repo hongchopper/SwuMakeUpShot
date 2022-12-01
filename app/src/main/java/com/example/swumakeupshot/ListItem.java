@@ -7,7 +7,16 @@ public class ListItem {
     String caution_count;
     String allergy_count;
     String good_count;
+    String uri;
     int resId;
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public int getResId() {
         return resId;

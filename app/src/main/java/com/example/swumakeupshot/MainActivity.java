@@ -6,9 +6,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
@@ -31,18 +35,26 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.mlkit.vision.common.InputImage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton camerabtn;
+    Bitmap bitmap;
+    InputImage image;
+    ImageView imageView;
     private ListView lvList = null;
     private ListViewAdapter adapter = null;
     public static Context context;
+    public List<anal_cos> imgList ;
 
     //DBHelper helper;
     SQLiteDatabase db;
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         displayList();
+        displayImg();
 
     }
 
@@ -97,6 +110,39 @@ public class MainActivity extends AppCompatActivity {
         //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
         lvList.setAdapter(adapter);
 
+    }
+    public void displayImg(){
+        //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
+        DataBaseHelper2 helper = new DataBaseHelper2(this);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        //Cursor라는 그릇에 목록을 담아주기
+        Cursor cursor = database.rawQuery("SELECT * FROM cos_image",null);
+
+        //리스트뷰에 목록 채워주는 도구인 adapter준비
+        ListViewAdapter adapter = new ListViewAdapter();
+
+        //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
+        while(cursor.moveToNext()){
+            //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
+            adapter.addItemToList2(cursor.getString(0),cursor.getString(1));
+        }
+
+        //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
+        lvList.setAdapter(adapter);
+
+    }
+    private void setImage(Uri uri) {
+        try{
+            InputStream in = getContentResolver().openInputStream(uri);
+            bitmap = BitmapFactory.decodeStream(in);
+            imageView.setImageBitmap(bitmap);
+
+            image = InputImage.fromBitmap(bitmap, 0);
+            Log.e("setImage", "이미지 to 비트맵");
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
 
