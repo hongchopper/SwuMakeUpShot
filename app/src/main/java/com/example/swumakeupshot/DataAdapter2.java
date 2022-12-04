@@ -74,7 +74,7 @@ public class DataAdapter2
             List ciList = new ArrayList();
 
             // TODO : 모델 선언
-            anal_cos ci = null;
+            ListItem ci = null;
 
             Cursor mCur = mDb.rawQuery(sql, null);
             if (mCur!=null)
@@ -83,11 +83,11 @@ public class DataAdapter2
                 while( mCur.moveToNext() ) {
 
                     // TODO : 커스텀 모델 생성
-                    ci = new anal_cos();
+                    ci = new ListItem();
 
                     // TODO : Record 기술
                     ci.setCos_name(mCur.getString(0));
-                    ci.setData(mCur.getString(1));
+                    ci.setCaution_count(mCur.getString(1));
                     // 리스트에 넣기
                     ciList.add(ci);
                 }
