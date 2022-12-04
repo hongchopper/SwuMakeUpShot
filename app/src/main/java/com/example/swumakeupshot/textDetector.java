@@ -74,8 +74,8 @@ public class textDetector extends AppCompatActivity {
         context=this;
         cos_name=(EditText)findViewById(R.id.makeup_editname);
         imageView = (ImageView)findViewById(R.id.quick_start_cropped_image);
-        text_info = (TextView) findViewById(R.id.text_info);
-        all=(TextView)findViewById(R.id.all);
+        //text_info = (TextView) findViewById(R.id.text_info);
+        //all=(TextView)findViewById(R.id.all);
         caution_text=(TextView)findViewById(R.id.caution_text);
         caution=(TextView)findViewById(R.id.caution);
         allergy_text=(TextView)findViewById(R.id.allergy_text);

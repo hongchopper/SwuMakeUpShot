@@ -28,15 +28,52 @@
         android:padding="10dp"
         android:textSize="13dp" />
 
-    <ScrollView
-        android:id="@+id/scrollview"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp">
-        <include layout="@layout/sub_list_item" />
-    </ScrollView>
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_weight="1"
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
+            <include layout="@layout/sub_list_item" />
+        </ScrollView>
 
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/onBackPress"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/teal_200"
+                android:drawableLeft="@drawable/ic_baseline_receipt_24"
+                android:layout_margin="3dp"
+                android:text="뒤로가기"
+                android:textColor="#2C2C2C"
+                android:textSize="11dp" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/teal_200"
+                android:drawableLeft="@drawable/ic_baseline_save_24"
+                android:text="저장하기"
+                android:textColor="#2C2C2C"
+                android:textSize="11dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
