@@ -2,6 +2,7 @@ package com.example.swumakeupshot;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
     ArrayList<ListItem> list = new ArrayList<ListItem>();
+
+    public ListViewAdapter(){};
 
     @Override
     public int getCount() {
@@ -32,15 +37,18 @@ public class ListViewAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view=convertView;
+        RecyclerView.ViewHolder holder;
 
-        final Context context = viewGroup.getContext();
+        final int pos=position;
+        final Context context = parent.getContext();
 
         //리스트뷰에 아이템이 인플레이트 되어있는지 확인한후
         //아이템이 없다면 아래처럼 아이템 레이아웃을 인플레이트 하고 view객체에 담는다.
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.main_list_item,viewGroup,false);
+            view = inflater.inflate(R.layout.main_list_item,parent,false);
         }
 
         //이제 아이템에 존재하는 텍스트뷰 객체들을 view객체에서 찾아 가져온다
@@ -49,17 +57,11 @@ public class ListViewAdapter extends BaseAdapter {
         TextView allergy = (TextView)view.findViewById(R.id.allergy);
         TextView good = (TextView)view.findViewById(R.id.good);
         ImageView image=view.findViewById(R.id.makeup_img);
-        Button delete_btn=view.findViewById(R.id.delete_btn);
 
-        delete_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        Log.e("포지션", String.valueOf(position));
 
         //현재 포지션에 해당하는 아이템에 글자를 적용하기 위해 list배열에서 객체를 가져온다.
-        ListItem listdata = list.get(i);
+        ListItem listdata = list.get(position);
 
         //가져온 객체안에 있는 글자들을 각 뷰에 적용한다
         name.setText(listdata.getCos_name()); //원래 int형이라 String으로 형 변환

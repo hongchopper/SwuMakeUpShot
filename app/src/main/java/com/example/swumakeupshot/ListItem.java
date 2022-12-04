@@ -8,7 +8,16 @@ public class ListItem {
     String allergy_count;
     String good_count;
     String uri;
-    int Id;
+
+    public ListItem(){};
+
+    public ListItem(String name, String caution_count, String allergy_count,String good_count,String uri) {
+        this.cos_name = name;
+        this.caution_count = caution_count;
+        this.allergy_count = allergy_count;
+        this.good_count=good_count;
+        this.uri=uri;
+    }
 
     public String getUri() {
         return uri;
@@ -16,13 +25,6 @@ public class ListItem {
 
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    public int getId() {
-        return Id;
-    }
-    public void setId(int Id) {
-        this.Id = Id;
     }
 
     public String getCos_name() {

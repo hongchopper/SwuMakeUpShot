@@ -1,5 +1,7 @@
 package com.example.swumakeupshot;
 
+import static com.example.swumakeupshot.DataAdapter.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 
@@ -52,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
     InputImage image;
     ImageView imageView;
     private ListView lvList = null;
-    private ListViewAdapter adapter = null;
+    //private ListViewAdapter adapter = null;
     public static Context context;
-    public List<anal_cos> imgList ;
+    ArrayList<ListItem> dataModels = new ArrayList<>();
+    Adapter adapter;
 
     //DBHelper helper;
     SQLiteDatabase db;
@@ -74,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //권한요청
         ActivityCompat.requestPermissions(MainActivity.this, permissions,  1);
 
-        lvList = (ListView) findViewById(R.id.main_listview);
-
-
+        //lvList = (ListView) findViewById(R.id.main_listview);
 
         camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,9 +88,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        displayList();
-    }
+        displayRecycleList();
+        //displayList();
 
+        /*lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //String check= (String) parent.getItemAtPosition(position);
+                ListItem cos=(ListItem)lvList.getItemAtPosition(position);
+                String name= cos.getCos_name();
+                Log.e("토스트",name);
+                Toast.makeText(MainActivity.this,name,Toast.LENGTH_SHORT).show();
+            }
+        });*/
+    }
+    public void displayRecycleList(){
+        DataBaseHelper2 helper = new DataBaseHelper2(this);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        adapter = new Adapter(getApplicationContext(),dataModels);
+
+        RecyclerView recyclerView = findViewById(R.id.main_listview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        Cursor cursor = database.rawQuery("select * from anal_total",null);
+        int recordCount = cursor.getCount();
+
+        Log.d(TAG,"recordCount: " + recordCount);
+        for (int i = 0; i < recordCount; i++){
+
+            cursor.moveToNext();
+            String name = cursor.getString(0);
+            String caution = cursor.getString(1);
+            String allergy = cursor.getString(2);
+            String good = cursor.getString(3);
+            String uri = cursor.getString(4);
+
+            Log.d(TAG,"name: " + name);
+            dataModels.add(new ListItem(name,caution,allergy,good,uri));
+            //리사이클러뷰에 추가
+        }
+        cursor.close();
+
+        Log.d(TAG,"제발: " + dataModels.toString());
+        adapter.notifyDataSetChanged();
+    }
     public void displayList(){
         //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
         DataBaseHelper2 helper = new DataBaseHelper2(this);
@@ -103,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
         while(cursor.moveToNext()){
             //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
             adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
-            Log.e("db에서 가져온 uri",cursor.getString(4));
         }
 
         //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정

@@ -101,8 +101,8 @@ public class SubActivity extends AppCompatActivity {
                 }
                 insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count),"_id",_id,
                         "cos_img",uri.toString());
-
-                ((MainActivity)MainActivity.context).displayList();
+                ((MainActivity)MainActivity.context).displayRecycleList();
+                Toast.makeText(SubActivity.this,"저장되었습니다.",Toast.LENGTH_SHORT).show();
             }
         });
         back_btn.setOnClickListener(new View.OnClickListener() {
