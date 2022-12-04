@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -135,7 +134,7 @@
                 android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -176,37 +175,6 @@
                 android:hint="성분들 이름"
                 android:textSize="13dp" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/onBackPress"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/teal_200"
-            android:drawableLeft="@drawable/ic_baseline_receipt_24"
-            android:layout_margin="3dp"
-            android:text="뒤로가기"
-            android:textColor="#2C2C2C"
-            android:textSize="11dp" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/teal_200"
-            android:drawableLeft="@drawable/ic_baseline_save_24"
-            android:text="저장하기"
-            android:textColor="#2C2C2C"
-            android:textSize="11dp" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

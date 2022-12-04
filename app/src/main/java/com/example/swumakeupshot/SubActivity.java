@@ -69,8 +69,8 @@ public class SubActivity extends AppCompatActivity {
 
         imageView = (ImageView)findViewById(R.id.makeup_someimg);
         cos_name=findViewById(R.id.makeup_editname);
-        text_info = (TextView) findViewById(R.id.text_info);
-        all=(TextView)findViewById(R.id.all);
+        //text_info = (TextView) findViewById(R.id.text_info);
+        //all=(TextView)findViewById(R.id.all);
         caution_text=(TextView)findViewById(R.id.caution_text);
         caution=(TextView)findViewById(R.id.caution);
         allergy_text=(TextView)findViewById(R.id.allergy_text);

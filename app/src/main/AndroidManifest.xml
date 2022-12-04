@@ -29,7 +29,7 @@
             android:resource="@xml/filepaths" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".IntroActivity"
             android:rotationAnimation="seamless"
             android:exported="true">
             <intent-filter>
@@ -53,7 +53,7 @@
         <activity android:name=".SubActivity" />
         <activity android:name=".textDetector" />
         <activity android:name=".cameraX" />
-
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
