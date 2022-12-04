@@ -153,6 +153,30 @@ public class MainActivity extends AppCompatActivity {
         //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
         lvList.setAdapter(adapter);
     }
+
+    /*private void bindDelete() {
+        findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ListItem recyclerItem = mRecyclerAdapter.getSelected();
+                if (recyclerItem == null) {
+                    Toast.makeText(PhMainActivity.this, R.string.err_no_selected_item, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // 선택한 item 삭제
+                mItemList.remove(recyclerItem);
+
+                // List 반영
+                // mRecyclerAdapter.notifyDataSetChanged();
+                final int checkedPosition = mRecyclerAdapter.getCheckedPosition();
+                mRecyclerAdapter.notifyItemRemoved(checkedPosition);
+
+                // 선택 항목 초기화
+                mRecyclerAdapter.clearSelected();
+            }
+        });*/
+
     //타이틀바 맨 우측 버튼
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

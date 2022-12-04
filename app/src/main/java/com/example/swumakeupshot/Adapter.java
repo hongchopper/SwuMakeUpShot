@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter {
     /*
@@ -33,6 +35,26 @@ public class Adapter extends RecyclerView.Adapter {
         this.dataModels = dataModels;
         this.context = context;
     }
+    public interface OnItemClickEventListener {
+        void onItemClick(int a_position);
+    }
+
+    private List<ListItem> mItemList;
+
+    private OnItemClickEventListener mItemClickListener = new OnItemClickEventListener() {
+        @Override
+        public void onItemClick(int a_position) {
+            notifyItemChanged(mCheckedPosition, null);
+            mCheckedPosition = a_position;
+            notifyItemChanged(a_position, null);
+        }
+    };
+
+    private int mCheckedPosition = -1;
+
+    public Adapter(List<ListItem> a_list) {
+        mItemList = a_list;
+    }
 
     @Override
     public int getItemCount() {
@@ -43,17 +65,17 @@ public class Adapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG,"onCreateViewHolder");
 
         //자신이 만든 itemview를 inflate한 다음 뷰홀더 생성
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_list_item,parent,false);
-        MyViewHolder viewHolder = new MyViewHolder(view);
+        //MyViewHolder viewHolder = new MyViewHolder(view);
 
 
         //생선된 뷰홀더를 리턴하여 onBindViewHolder에 전달한다.
-        return viewHolder;
+        return new ViewHolder(view,mItemClickListener);
     }
 
 
@@ -62,8 +84,17 @@ public class Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder");
+        //final ListItem item = mItemList.get(position);
 
-        MyViewHolder myViewHolder = (MyViewHolder)holder;
+        final int color;
+        if (holder.getAdapterPosition() == mCheckedPosition) {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.purple_200);
+        } else {
+            color = ContextCompat.getColor(holder.itemView.getContext(), android.R.color.transparent);
+
+        }
+        holder.itemView.setBackgroundColor(color);
+        ViewHolder myViewHolder = (ViewHolder)holder;
 
         myViewHolder.name.setText(dataModels.get(position).getCos_name());
         myViewHolder.caution.setText(dataModels.get(position).getCaution_count());
@@ -74,17 +105,29 @@ public class Adapter extends RecyclerView.Adapter {
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    /*public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,caution,allergy,good;
         ImageView image;
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(View itemView,final OnItemClickEventListener a_itemClickListener) {
             super(itemView);
+
+            // Click event
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View a_view) {
+                    final int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        a_itemClickListener.onItemClick(position);
+                    }
+                }
+            });
+
             name = (TextView)itemView.findViewById(R.id.makeup_name);
             caution = (TextView)itemView.findViewById(R.id.caution);
             allergy = (TextView)itemView.findViewById(R.id.allergy);
             good = (TextView)itemView.findViewById(R.id.good);
             image=itemView.findViewById(R.id.makeup_img);
         }
-    }
+    }*/
 
 }
