@@ -8,7 +8,7 @@ public class ListItem {
     String allergy_count;
     String good_count;
     String uri;
-    int resId;
+    int Id;
 
     public String getUri() {
         return uri;
@@ -18,12 +18,11 @@ public class ListItem {
         this.uri = uri;
     }
 
-    public int getResId() {
-        return resId;
+    public int getId() {
+        return Id;
     }
-
-    public void setResId(int resId) {
-        this.resId = resId;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getCos_name() {

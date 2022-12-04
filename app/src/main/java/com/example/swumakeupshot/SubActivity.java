@@ -58,6 +58,7 @@ public class SubActivity extends AppCompatActivity {
     Uri uri;
     Bitmap bitmap;
     InputImage image;
+    int _id;
     public List<caution_ingredients> ciList ;
     public static Context context;
 
@@ -98,8 +99,9 @@ public class SubActivity extends AppCompatActivity {
                 for(int i = 0; i < anal_good.size(); i++){
                     insertDB("anal_good","good_ingredient", anal_good.get(i));
                 }
-                insertDB("cos_image","uri", uri.toString());
-                insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count));
+                insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count),"_id",_id,
+                        "cos_img",uri.toString());
+
                 ((MainActivity)MainActivity.context).displayList();
             }
         });
@@ -272,7 +274,7 @@ public class SubActivity extends AppCompatActivity {
         db.close();
         dbHelper.close();
     }
-    private void insertTotalDB(String table_name,String col_name1,String name1,String col_name2,String name2,String col_name3,String name3){
+    private void insertTotalDB(String table_name,String col_name1,String name1,String col_name2,String name2,String col_name3,String name3,String col_name4,int name4,String col_name5,String name5){
         DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
         SQLiteDatabase db=dbHelper.getWritableDatabase();
 
@@ -281,6 +283,9 @@ public class SubActivity extends AppCompatActivity {
         cv.put(col_name1,name1);
         cv.put(col_name2,name2);
         cv.put(col_name3,name3);
+        cv.put(col_name4,name4);
+        cv.put(col_name5,name5);
+        _id+=1;
 
         db.insert(table_name,null,cv);
         //Log.e("삽입 결과",name);

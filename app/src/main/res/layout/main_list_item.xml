@@ -30,7 +30,13 @@
                 android:text="이미지"
                 android:gravity="center"/>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14"
+            android:orientation="horizontal"
+            android:weightSum="70" >
         <LinearLayout
             android:layout_marginLeft="5dp"
             android:layout_width="0dp"
@@ -103,6 +109,14 @@
                     android:text="성분명1, 성분명2, 성분명3, 성분명4, ..."
                     android:textSize="10dp" />-->
             </LinearLayout>
+        </LinearLayout>
+
+            <Button
+                android:id="@+id/delete_btn"
+                android:layout_width="10dp"
+                android:layout_height="30dp"
+                android:layout_weight="60"
+                android:text="Button" />
         </LinearLayout>
 
     </LinearLayout>

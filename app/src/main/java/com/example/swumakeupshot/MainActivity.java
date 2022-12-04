@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         displayList();
-        displayImg();
-
     }
 
     public void displayList(){
@@ -104,48 +102,13 @@ public class MainActivity extends AppCompatActivity {
         //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
         while(cursor.moveToNext()){
             //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
-            adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3));
+            adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            Log.e("db에서 가져온 uri",cursor.getString(4));
         }
 
         //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
         lvList.setAdapter(adapter);
-
     }
-    public void displayImg(){
-        //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
-        DataBaseHelper2 helper = new DataBaseHelper2(this);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
-        //Cursor라는 그릇에 목록을 담아주기
-        Cursor cursor = database.rawQuery("SELECT * FROM cos_image",null);
-
-        //리스트뷰에 목록 채워주는 도구인 adapter준비
-        ListViewAdapter adapter = new ListViewAdapter();
-
-        //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
-        while(cursor.moveToNext()){
-            //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
-            adapter.addItemToList2(cursor.getString(0),cursor.getString(1));
-        }
-
-        //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
-        lvList.setAdapter(adapter);
-
-    }
-    private void setImage(Uri uri) {
-        try{
-            InputStream in = getContentResolver().openInputStream(uri);
-            bitmap = BitmapFactory.decodeStream(in);
-            imageView.setImageBitmap(bitmap);
-
-            image = InputImage.fromBitmap(bitmap, 0);
-            Log.e("setImage", "이미지 to 비트맵");
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-    }
-
-
     //타이틀바 맨 우측 버튼
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

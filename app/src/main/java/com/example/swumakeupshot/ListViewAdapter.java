@@ -1,10 +1,12 @@
 package com.example.swumakeupshot;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +49,14 @@ public class ListViewAdapter extends BaseAdapter {
         TextView allergy = (TextView)view.findViewById(R.id.allergy);
         TextView good = (TextView)view.findViewById(R.id.good);
         ImageView image=view.findViewById(R.id.makeup_img);
+        Button delete_btn=view.findViewById(R.id.delete_btn);
+
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         //현재 포지션에 해당하는 아이템에 글자를 적용하기 위해 list배열에서 객체를 가져온다.
         ListItem listdata = list.get(i);
@@ -56,18 +66,19 @@ public class ListViewAdapter extends BaseAdapter {
         caution.setText(listdata.getCaution_count());
         allergy.setText(listdata.getAllergy_count());
         good.setText(listdata.getGood_count());
-
+        image.setImageURI(Uri.parse(listdata.getUri()));
         return view;
     }
 
     //ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToList(String name, String caution,String allergy, String good){
+    public void addItemToList(String name, String caution,String allergy, String good,String uri){
         ListItem listdata = new ListItem();
 
         listdata.setCos_name(name);
         listdata.setCaution_count(caution);
         listdata.setAllergy_count(allergy);
         listdata.setGood_count(good);
+        listdata.setUri(uri);
 
         //값들의 조립이 완성된 listdata객체 한개를 list배열에 추가
         list.add(listdata);

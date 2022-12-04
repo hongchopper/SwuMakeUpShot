@@ -124,11 +124,4 @@ public class DataBaseHelper2 extends SQLiteOpenHelper
         super.onConfigure(db);
         db.disableWriteAheadLogging();
     }
-    public void insertCautionData(String TABLE_NAME,String cos_name,String caution){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(COL_1,cos_name);
-        contentValues.put(COL_3,caution);
-        db.insert(TABLE_NAME,null,contentValues);
-    }
 }
