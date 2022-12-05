@@ -41,7 +41,7 @@
             android:layout_marginLeft="5dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="60"
+            android:layout_weight="50"
             android:orientation="vertical"
             android:weightSum="100" >
 
@@ -55,7 +55,7 @@
 
             <LinearLayout
                 android:layout_marginTop="7dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
@@ -94,23 +94,19 @@
                     android:text="5개"
                     android:textSize="12dp" />
             </LinearLayout>
-
+        </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:gravity="right"
                 android:orientation="horizontal"
                 android:weightSum="100" >
-
-                <!--<TextView
-                    android:id="@+id/makeup_text"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="성분명1, 성분명2, 성분명3, 성분명4, ..."
-                    android:textSize="10dp" />-->
+                    android:src="@drawable/ic_baseline_delete_24"/>
             </LinearLayout>
-        </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>
