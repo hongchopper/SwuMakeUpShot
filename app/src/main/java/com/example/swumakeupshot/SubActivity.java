@@ -101,7 +101,7 @@ public class SubActivity extends AppCompatActivity {
                 }
                 insertTotalDB("anal_total","sum_allergy",String.valueOf(allergy_count),"sum_caution",String.valueOf(caution_count),"sum_good",String.valueOf(good_count),"_id",_id,
                         "cos_img",uri.toString());
-                ((MainActivity)MainActivity.context).displayRecycleList();
+                //((MainActivity)MainActivity.context).displayRecycleList();
                 Toast.makeText(SubActivity.this,"저장되었습니다.",Toast.LENGTH_SHORT).show();
             }
         });
@@ -325,25 +325,25 @@ public class SubActivity extends AppCompatActivity {
                         for(int i = 0; i < ingredient.size(); i++) {
                             all_count+=1;
                             if(i == ingredient.size()-1){
-                                text_info.append(ingredient.get(i));
+                                //text_info.append(ingredient.get(i));
                             }else if(ingredient.get(i).contains("전성분") || ingredient.get(i).contains("성분")|| ingredient.get(i).contains("성분명")){
                                 Log.e("전성분 포함 글자",ingredient.get(i));
                                 String result2=ingredient.get(i).substring(4);
                                 Log.e("전성분 뺀 글자",result2);
-                                text_info.append(result2);
-                                text_info.append(", ");
+                                //text_info.append(result2);
+                                //text_info.append(", ");
                                 all_count-=1;
                             }
                             else{
-                                text_info.append(ingredient.get(i));
-                                text_info.append(", ");
+                                //text_info.append(ingredient.get(i));
+                                //text_info.append(", ");
                             }
                             Log.e("전체 결과", ingredient.get(i));
                         }
                         initCautionDB();
                         initAllergyDB();
                         initGoodDB();
-                        all.setText("/ "+all_count+" 개");
+                        //all.setText("/ "+all_count+" 개");
                     }
                 })
                 // 이미지 인식에 실패하면 실행되는 리스너

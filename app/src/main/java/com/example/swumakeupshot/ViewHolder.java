@@ -1,5 +1,6 @@
 package com.example.swumakeupshot;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
                 final int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     a_itemClickListener.onItemClick(position);
+                    Log.e("누른거나와라", String.valueOf(position));
                 }
             }
         });

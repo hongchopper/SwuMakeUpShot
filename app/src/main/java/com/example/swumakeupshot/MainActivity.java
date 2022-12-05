@@ -33,8 +33,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 
@@ -89,18 +91,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         displayRecycleList();
-        //displayList();
-
-        /*lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //String check= (String) parent.getItemAtPosition(position);
-                ListItem cos=(ListItem)lvList.getItemAtPosition(position);
-                String name= cos.getCos_name();
-                Log.e("토스트",name);
-                Toast.makeText(MainActivity.this,name,Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
     public void displayRecycleList(){
         DataBaseHelper2 helper = new DataBaseHelper2(this);
@@ -130,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        Log.d(TAG,"제발: " + dataModels.toString());
         adapter.notifyDataSetChanged();
     }
     public void displayList(){
@@ -163,15 +152,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(PhMainActivity.this, R.string.err_no_selected_item, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 // 선택한 item 삭제
                 mItemList.remove(recyclerItem);
-
                 // List 반영
                 // mRecyclerAdapter.notifyDataSetChanged();
                 final int checkedPosition = mRecyclerAdapter.getCheckedPosition();
                 mRecyclerAdapter.notifyItemRemoved(checkedPosition);
-
                 // 선택 항목 초기화
                 mRecyclerAdapter.clearSelected();
             }

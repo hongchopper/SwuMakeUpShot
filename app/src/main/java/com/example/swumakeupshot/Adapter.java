@@ -3,6 +3,7 @@ package com.example.swumakeupshot;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class Adapter extends RecyclerView.Adapter {
     String TAG = "RecyclerViewAdapter";
 
     //리사이클러뷰에 넣을 데이터 리스트
-    ArrayList<ListItem> dataModels;
+    ArrayList<ListItem> dataModels=new ArrayList<>();
     Context context;
 
     //생성자를 통하여 데이터 리스트 context를 받음
@@ -84,8 +85,8 @@ public class Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder");
-        //final ListItem item = mItemList.get(position);
-
+        ListItem item = dataModels.get(position);
+        Log.e("선택한 화장품",dataModels.get(position).getCos_name());
         final int color;
         if (holder.getAdapterPosition() == mCheckedPosition) {
             color = ContextCompat.getColor(holder.itemView.getContext(), R.color.purple_200);
@@ -96,11 +97,11 @@ public class Adapter extends RecyclerView.Adapter {
         holder.itemView.setBackgroundColor(color);
         ViewHolder myViewHolder = (ViewHolder)holder;
 
-        myViewHolder.name.setText(dataModels.get(position).getCos_name());
-        myViewHolder.caution.setText(dataModels.get(position).getCaution_count());
-        myViewHolder.allergy.setText(dataModels.get(position).getAllergy_count());
-        myViewHolder.good.setText(dataModels.get(position).getGood_count());
-        myViewHolder.image.setImageURI(Uri.parse(dataModels.get(position).getUri()));
+        myViewHolder.name.setText(item.getCos_name());
+        myViewHolder.caution.setText(item.getCaution_count());
+        myViewHolder.allergy.setText(item.getAllergy_count());
+        myViewHolder.good.setText(item.getGood_count());
+        myViewHolder.image.setImageURI(Uri.parse(item.getUri()));
     }
 
 
@@ -110,7 +111,6 @@ public class Adapter extends RecyclerView.Adapter {
         ImageView image;
         public MyViewHolder(View itemView,final OnItemClickEventListener a_itemClickListener) {
             super(itemView);
-
             // Click event
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -121,7 +121,6 @@ public class Adapter extends RecyclerView.Adapter {
                     }
                 }
             });
-
             name = (TextView)itemView.findViewById(R.id.makeup_name);
             caution = (TextView)itemView.findViewById(R.id.caution);
             allergy = (TextView)itemView.findViewById(R.id.allergy);
