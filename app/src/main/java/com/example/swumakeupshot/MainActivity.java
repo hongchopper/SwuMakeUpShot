@@ -56,18 +56,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton camerabtn;
     String name;
-    Bitmap bitmap;
-    InputImage image;
-    ImageView imageView;
-    //private ListViewAdapter adapter = null;
     public static Context context;
     ArrayList<ListItem> dataModels = new ArrayList<>();
 
     private Adapter adapter;
 
-    //DBHelper helper;
-    SQLiteDatabase db;
-    //DataBaseHelper helper=new DataBaseHelper(this);
     String[] permissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
