@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="410dp"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:weightSum="100"
@@ -54,7 +54,7 @@
                 android:textSize="15dp" />
 
             <LinearLayout
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -109,7 +109,9 @@
                     android:src="@drawable/ic_baseline_delete_24"/>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
+    <View
+        android:background="#C2C2C2"
+        android:layout_width="match_parent"
+        android:layout_height="2px"/>
 </LinearLayout>

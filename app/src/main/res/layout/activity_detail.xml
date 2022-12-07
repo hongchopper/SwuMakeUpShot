@@ -9,6 +9,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:layout_marginTop="15dp"
         android:id="@+id/makeup_someimg"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -16,7 +17,7 @@
 
     <TextView
         android:id="@+id/makeup_name"
-        android:layout_width="232dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ems="10"
@@ -41,26 +42,6 @@
 
             <include layout="@layout/sub_list_item" />
         </ScrollView>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/onBackPress"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/teal_200"
-                android:drawableLeft="@drawable/ic_baseline_receipt_24"
-                android:layout_margin="3dp"
-                android:text="뒤로가기"
-                android:textColor="#2C2C2C"
-                android:textSize="11dp" />
-
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
