@@ -55,7 +55,7 @@ public class SubActivity extends AppCompatActivity {
     TextView text_info,caution_text,good_text,allergy_text,all,good,caution,allergy;
     TextRecognizer recognizer;
     int all_count,caution_count,allergy_count,good_count;
-    Uri uri;
+    Uri uri,xuri;
     Bitmap bitmap;
     InputImage image;
     int _id;
@@ -84,7 +84,12 @@ public class SubActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         uri = intent.getExtras().getParcelable("Uri");
-        setImage(uri);
+        if(uri != null) {
+            setImage(uri);
+        } else{
+            xuri= intent.getExtras().getParcelable("xUri");
+            setImage(xuri);
+            }
         Log.e("인텐트로 전달된 URI",uri.toString());
 
         save_btn.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +108,9 @@ public class SubActivity extends AppCompatActivity {
                         "cos_img",uri.toString());
                 //((MainActivity)MainActivity.context).displayRecycleList();
                 Toast.makeText(SubActivity.this,"저장되었습니다.",Toast.LENGTH_SHORT).show();
+                finish();
+                Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
         back_btn.setOnClickListener(new View.OnClickListener() {

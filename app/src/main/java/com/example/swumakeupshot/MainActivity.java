@@ -55,6 +55,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton camerabtn;
+    String name;
     Bitmap bitmap;
     InputImage image;
     ImageView imageView;
@@ -105,17 +106,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(View v, int position) {
                 PopupMenu popup = new PopupMenu(MainActivity.this, v);
-                getMenuInflater().inflate(R.menu.main_list_menu, popup.getMenu());
-                Toast.makeText(MainActivity.this, "꾹 누르기", Toast.LENGTH_SHORT).show();
+                popup.getMenuInflater().inflate(R.menu.main_list_menu, popup.getMenu());
                 // Popup menu click event 처리
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem a_item) {
-
-                        String name = dataModels.get(position).getCos_name();
+                        name = dataModels.get(position).getCos_name();
                         switch (a_item.getItemId()) {
                             case R.id.action_delete:
-                                Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
+                                deleteDB();
+                                Intent intent = getIntent();
+                                finish(); //현재 액티비티 종료 실시
+                                overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                                startActivity(intent); //현재 액티비티 재실행 실시
+                                overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
                                 break;
 
                             default:
@@ -124,9 +128,20 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+                popup.show();
             }
     });
     }
+    public void deleteDB(){
+        DataBaseHelper2 helper2 = new DataBaseHelper2(this);
+        helper2.openDataBase();
+        SQLiteDatabase database = helper2.getWritableDatabase();
+
+        database.execSQL("delete from anal_total where cos_name ="+"\""+name+"\"");
+        database.execSQL("delete from anal_allergy where cos_name ="+"\""+name+"\"");
+        database.execSQL("delete from anal_cautious where cos_name ="+"\""+name+"\"");
+        database.execSQL("delete from anal_good where cos_name ="+"\""+name+"\"");
+        }
 
     public void displayRecycleList(){
         DataBaseHelper2 helper2 = new DataBaseHelper2(this);
@@ -158,28 +173,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    //타이틀바 맨 우측 버튼
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        //길이 조정
-        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        //검색 시 힌트 추가
-        searchView.setQueryHint("화장품명을 검색합니다.");
-        MenuItem item_like = menu.add(0,0,0,"삭제하기");
-        item_like.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                //삭제코드구현
-                return true;
-            }
-        });
-        return true;
-    }
-
     //타이틀바 우측 두번째, 검색 버튼
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -187,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         //검색버튼 눌렀을때, 이벤트 제어
         if(id==R.id.search){
-            //검색했을때 쿼리 구현
+
             return true;
         }
         return super.onOptionsItemSelected(item);

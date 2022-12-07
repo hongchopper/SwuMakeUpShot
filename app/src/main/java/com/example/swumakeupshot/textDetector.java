@@ -56,7 +56,7 @@ public class textDetector extends AppCompatActivity {
     private PermissionSupport permission;
 
     ImageView imageView;    // 갤러리에서 가져온 이미지를 보여줄 뷰
-    Uri uri, xUri;                // 갤러리에서 가져온 이미지에 대한 Uri
+    Uri uri=null, xUri=null;                // 갤러리에서 가져온 이미지에 대한 Uri
     Bitmap bitmap;          // 갤러리에서 가져온 이미지를 담을 비트맵
     InputImage image;       // ML 모델이 인식할 인풋 이미지
     TextView text_info,caution_text,good_text,allergy_text,all,good,caution,allergy;     // ML 모델이 인식한 텍스트를 보여줄 뷰
@@ -119,8 +119,11 @@ public class textDetector extends AppCompatActivity {
             public void onClick(View v) {
                 //TextRecognition(recognizer);
                 Intent callIntent=new Intent(getApplicationContext(), SubActivity.class);
-                callIntent.putExtra("Uri",xUri);
-                callIntent.putExtra("Uri",uri);
+                if (uri==null){
+                    callIntent.putExtra("Uri",xUri);
+                }else{
+                    callIntent.putExtra("Uri",uri);
+                }
                 startActivity(callIntent);
             }
         });

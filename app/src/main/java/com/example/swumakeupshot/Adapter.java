@@ -1,13 +1,18 @@
 package com.example.swumakeupshot;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,9 +55,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return dataModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name,caution,allergy,good;
-        ImageView image,delete;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name, caution, allergy, good;
+        ImageView image, delete;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -62,8 +68,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        if(mListener!=null){
-                            mListener.onItemClick(view,position);
+                        if (mListener != null) {
+                            mListener.onItemClick(view, position);
                         }
                     }
                 }
@@ -73,25 +79,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 public boolean onLongClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        if(mListener!=null){
-                            mItemLongClickListener.onItemLongClick(v,position);
+                        if (mListener != null) {
+                            mItemLongClickListener.onItemLongClick(v, position);
                         }
                     }
                     return true;
                 }
             });
 
-            this.name = (TextView)itemView.findViewById(R.id.makeup_name);
-            this.caution = (TextView)itemView.findViewById(R.id.caution);
-            this.allergy = (TextView)itemView.findViewById(R.id.allergy);
-            this.good = (TextView)itemView.findViewById(R.id.good);
-            this.image=itemView.findViewById(R.id.makeup_img);
-            this.delete=itemView.findViewById(R.id.delete);
+            this.name = (TextView) itemView.findViewById(R.id.makeup_name);
+            this.caution = (TextView) itemView.findViewById(R.id.caution);
+            this.allergy = (TextView) itemView.findViewById(R.id.allergy);
+            this.good = (TextView) itemView.findViewById(R.id.good);
+            this.image = itemView.findViewById(R.id.makeup_img);
+            this.delete = itemView.findViewById(R.id.delete);
 
         }
-}
-
-
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
