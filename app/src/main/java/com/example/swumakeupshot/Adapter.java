@@ -17,18 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter {
-    /*
-      어댑터의 동작원리 및 순서
-      1.(getItemCount) 데이터 개수를 세어 어댑터가 만들어야 할 총 아이템 개수를 얻는다.
-      2.(getItemViewType)[생략가능] 현재 itemview의 viewtype을 판단한다
-      3.(onCreateViewHolder)viewtype에 맞는 뷰 홀더를 생성하여 onBindViewHolder에 전달한다.
-      4.(onBindViewHolder)뷰홀더와 position을 받아 postion에 맞는 데이터를 뷰홀더의 뷰들에 바인딩한다.
-      */
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     String TAG = "RecyclerViewAdapter";
 
     //리사이클러뷰에 넣을 데이터 리스트
-    ArrayList<ListItem> dataModels=new ArrayList<>();
+    ArrayList<ListItem> dataModels;
     Context context;
 
     //생성자를 통하여 데이터 리스트 context를 받음
@@ -36,26 +29,16 @@ public class Adapter extends RecyclerView.Adapter {
         this.dataModels = dataModels;
         this.context = context;
     }
-    public interface OnItemClickEventListener {
-        void onItemClick(int a_position);
+    interface OnItemClickListener {
+        void onItemClick(View v, int position);
     }
+    private OnItemClickListener mListener=null;
 
-    private List<ListItem> mItemList;
-
-    private OnItemClickEventListener mItemClickListener = new OnItemClickEventListener() {
-        @Override
-        public void onItemClick(int a_position) {
-            notifyItemChanged(mCheckedPosition, null);
-            mCheckedPosition = a_position;
-            notifyItemChanged(a_position, null);
-        }
-    };
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener=listener;
+    }
 
     private int mCheckedPosition = -1;
-
-    public Adapter(List<ListItem> a_list) {
-        mItemList = a_list;
-    }
 
     @Override
     public int getItemCount() {
@@ -63,30 +46,49 @@ public class Adapter extends RecyclerView.Adapter {
         return dataModels.size();
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name,caution,allergy,good;
+        ImageView image,delete;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            // Click event
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if(mListener!=null){
+                            mListener.onItemClick(view,position);
+                        }
+                    }
+                }
+            });
+
+            this.name = (TextView)itemView.findViewById(R.id.makeup_name);
+            this.caution = (TextView)itemView.findViewById(R.id.caution);
+            this.allergy = (TextView)itemView.findViewById(R.id.allergy);
+            this.good = (TextView)itemView.findViewById(R.id.good);
+            this.image=itemView.findViewById(R.id.makeup_img);
+            this.delete=itemView.findViewById(R.id.delete);
+        }
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG,"onCreateViewHolder");
-
-        //자신이 만든 itemview를 inflate한 다음 뷰홀더 생성
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_list_item,parent,false);
-        //MyViewHolder viewHolder = new MyViewHolder(view);
-
-
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate (R.layout.main_list_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
         //생선된 뷰홀더를 리턴하여 onBindViewHolder에 전달한다.
-        return new ViewHolder(view,mItemClickListener);
+        return viewHolder;
     }
 
-
-
-
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder");
         ListItem item = dataModels.get(position);
-        Log.e("선택한 화장품",dataModels.get(position).getCos_name());
+
         final int color;
         if (holder.getAdapterPosition() == mCheckedPosition) {
             color = ContextCompat.getColor(holder.itemView.getContext(), R.color.purple_200);
@@ -95,38 +97,13 @@ public class Adapter extends RecyclerView.Adapter {
 
         }
         holder.itemView.setBackgroundColor(color);
-        ViewHolder myViewHolder = (ViewHolder)holder;
 
-        myViewHolder.name.setText(item.getCos_name());
-        myViewHolder.caution.setText(item.getCaution_count());
-        myViewHolder.allergy.setText(item.getAllergy_count());
-        myViewHolder.good.setText(item.getGood_count());
-        myViewHolder.image.setImageURI(Uri.parse(item.getUri()));
+        holder.name.setText(item.getCos_name());
+        holder.caution.setText(item.getCaution_count());
+        holder.allergy.setText(item.getAllergy_count());
+        holder.good.setText(item.getGood_count());
+        holder.image.setImageURI(Uri.parse(item.getUri()));
+        holder.delete.setImageResource(R.drawable.ic_baseline_delete_24);
     }
-
-
-
-    /*public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,caution,allergy,good;
-        ImageView image;
-        public MyViewHolder(View itemView,final OnItemClickEventListener a_itemClickListener) {
-            super(itemView);
-            // Click event
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View a_view) {
-                    final int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        a_itemClickListener.onItemClick(position);
-                    }
-                }
-            });
-            name = (TextView)itemView.findViewById(R.id.makeup_name);
-            caution = (TextView)itemView.findViewById(R.id.caution);
-            allergy = (TextView)itemView.findViewById(R.id.allergy);
-            good = (TextView)itemView.findViewById(R.id.good);
-            image=itemView.findViewById(R.id.makeup_img);
-        }
-    }*/
 
 }

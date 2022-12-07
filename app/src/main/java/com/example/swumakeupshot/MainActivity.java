@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmap;
     InputImage image;
     ImageView imageView;
-    private ListView lvList = null;
     //private ListViewAdapter adapter = null;
     public static Context context;
     ArrayList<ListItem> dataModels = new ArrayList<>();
-    Adapter adapter;
+
+    private Adapter adapter;
 
     //DBHelper helper;
     SQLiteDatabase db;
-
+    //DataBaseHelper helper=new DataBaseHelper(this);
     String[] permissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
         //권한요청
         ActivityCompat.requestPermissions(MainActivity.this, permissions,  1);
 
-        //lvList = (ListView) findViewById(R.id.main_listview);
-
         camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,11 +88,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         displayRecycleList();
+
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                String name=dataModels.get(position).getCos_name();
+                String uri=dataModels.get(position).getUri();
+                Intent intent=new Intent(getApplicationContext(),DetailActivity.class);
+                intent.putExtra("화장품 이름",name);
+                intent.putExtra("화장품 uri",uri);
+                startActivity(intent);
+            }
+        });
     }
+
     public void displayRecycleList(){
-        DataBaseHelper2 helper = new DataBaseHelper2(this);
-        SQLiteDatabase database = helper.getReadableDatabase();
+        DataBaseHelper2 helper2 = new DataBaseHelper2(this);
+        SQLiteDatabase database = helper2.getReadableDatabase();
 
         adapter = new Adapter(getApplicationContext(),dataModels);
 
@@ -115,53 +127,15 @@ public class MainActivity extends AppCompatActivity {
             String uri = cursor.getString(4);
 
             Log.d(TAG,"name: " + name);
-            dataModels.add(new ListItem(name,caution,allergy,good,uri));
+            dataModels.add(new ListItem(name,caution,allergy,good,uri,getDrawable(R.drawable.ic_baseline_delete_24)));
             //리사이클러뷰에 추가
         }
         cursor.close();
 
         adapter.notifyDataSetChanged();
-    }
-    public void displayList(){
-        //Dbhelper의 읽기모드 객체를 가져와 SQLiteDatabase에 담아 사용준비
-        DataBaseHelper2 helper = new DataBaseHelper2(this);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
-        //Cursor라는 그릇에 목록을 담아주기
-        Cursor cursor = database.rawQuery("SELECT * FROM anal_total",null);
-
-        //리스트뷰에 목록 채워주는 도구인 adapter준비
-        ListViewAdapter adapter = new ListViewAdapter();
-
-        //목록의 개수만큼 순회하여 adapter에 있는 list배열에 add
-        while(cursor.moveToNext()){
-            //num 행은 가장 첫번째에 있으니 0번이 되고, name은 1번
-            adapter.addItemToList(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
-        }
-
-        //리스트뷰의 어댑터 대상을 여태 설계한 adapter로 설정
-        lvList.setAdapter(adapter);
+        Log.e("몇개", String.valueOf(adapter.getItemCount()));
     }
 
-    /*private void bindDelete() {
-        findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ListItem recyclerItem = mRecyclerAdapter.getSelected();
-                if (recyclerItem == null) {
-                    Toast.makeText(PhMainActivity.this, R.string.err_no_selected_item, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // 선택한 item 삭제
-                mItemList.remove(recyclerItem);
-                // List 반영
-                // mRecyclerAdapter.notifyDataSetChanged();
-                final int checkedPosition = mRecyclerAdapter.getCheckedPosition();
-                mRecyclerAdapter.notifyItemRemoved(checkedPosition);
-                // 선택 항목 초기화
-                mRecyclerAdapter.clearSelected();
-            }
-        });*/
 
     //타이틀바 맨 우측 버튼
     @Override

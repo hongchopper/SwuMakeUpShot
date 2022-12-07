@@ -54,6 +54,7 @@
         <activity android:name=".textDetector" />
         <activity android:name=".cameraX" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".DetailActivity"/>
     </application>
 
 </manifest>

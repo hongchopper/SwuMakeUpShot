@@ -1,5 +1,7 @@
 package com.example.swumakeupshot;
 
+import android.graphics.drawable.Drawable;
+
 public class ListItem {
     /* 아이템의 정보를 담기 위한 클래스 */
 
@@ -11,14 +13,15 @@ public class ListItem {
 
     public ListItem(){};
 
-    public ListItem(String name, String caution_count, String allergy_count,String good_count,String uri) {
+    public ListItem(String name, String caution_count, String allergy_count, String good_count, String uri, Drawable delete) {
         this.cos_name = name;
         this.caution_count = caution_count;
         this.allergy_count = allergy_count;
         this.good_count=good_count;
         this.uri=uri;
-    }
 
+    }
+    
     public String getUri() {
         return uri;
     }

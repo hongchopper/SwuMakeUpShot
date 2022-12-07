@@ -247,19 +247,6 @@ public class SubActivity extends AppCompatActivity {
         mDbHelper.close();
     }
 
-    /*private void insertUriDB(String table_name,String col_name, Uri uri){
-        DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
-
-        ContentValues cv=new ContentValues();
-        cv.put("cos_name",cos_name.getText().toString());
-        cv.put(col_name, String.valueOf(uri));
-
-        db.insert(table_name,col_name,cv);
-        //Log.e("삽입 결과",name);
-        db.close();
-        dbHelper.close();
-    }*/
 
     private void insertDB(String table_name,String col_name,String name){
         DataBaseHelper2 dbHelper=new DataBaseHelper2(this);
