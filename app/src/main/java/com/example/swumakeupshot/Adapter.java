@@ -32,12 +32,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
+    interface OnItemLongClickListener{
+        void onItemLongClick(View v,int position);
+    }
     private OnItemClickListener mListener=null;
+    private OnItemLongClickListener mItemLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mListener=listener;
     }
-
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) { mItemLongClickListener = listener;}
     private int mCheckedPosition = -1;
 
     @Override
@@ -46,7 +50,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return dataModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name,caution,allergy,good;
         ImageView image,delete;
         public ViewHolder(@NonNull View itemView) {
@@ -64,6 +68,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     }
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if(mListener!=null){
+                            mItemLongClickListener.onItemLongClick(v,position);
+                        }
+                    }
+                    return true;
+                }
+            });
 
             this.name = (TextView)itemView.findViewById(R.id.makeup_name);
             this.caution = (TextView)itemView.findViewById(R.id.caution);
@@ -71,8 +87,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             this.good = (TextView)itemView.findViewById(R.id.good);
             this.image=itemView.findViewById(R.id.makeup_img);
             this.delete=itemView.findViewById(R.id.delete);
+
         }
-    }
+}
+
 
     @NonNull
     @Override

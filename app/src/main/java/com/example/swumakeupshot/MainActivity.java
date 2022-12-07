@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -88,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         displayRecycleList();
-
         adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -102,6 +101,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        adapter.setOnItemLongClickListener(new Adapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View v, int position) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, v);
+                getMenuInflater().inflate(R.menu.main_list_menu, popup.getMenu());
+                Toast.makeText(MainActivity.this, "꾹 누르기", Toast.LENGTH_SHORT).show();
+                // Popup menu click event 처리
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem a_item) {
+
+                        String name = dataModels.get(position).getCos_name();
+                        switch (a_item.getItemId()) {
+                            case R.id.action_delete:
+                                Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
+                                break;
+
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+            }
+    });
     }
 
     public void displayRecycleList(){
@@ -128,13 +152,12 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(TAG,"name: " + name);
             dataModels.add(new ListItem(name,caution,allergy,good,uri,getDrawable(R.drawable.ic_baseline_delete_24)));
-            //리사이클러뷰에 추가
         }
         cursor.close();
-
         adapter.notifyDataSetChanged();
-        Log.e("몇개", String.valueOf(adapter.getItemCount()));
     }
+
+
 
 
     //타이틀바 맨 우측 버튼
